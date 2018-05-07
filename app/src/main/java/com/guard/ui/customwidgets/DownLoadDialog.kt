@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.guard.R
+import com.guard.model.utils.UIUtils
 
 /**
  * @author: jackli
@@ -23,12 +24,25 @@ class DownLoadDialog(context: Context?) : Dialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.diloag_download)
-        mDownloadmsg = findViewById(R.id.download_msg)
-        mDownloadpb = findViewById(R.id.download_dialog_pb)
+        mDownloadmsg = findViewById(R.id.dialog_update_download_msg)
+        mDownloadpb = findViewById(R.id.dialog_update_pb)
+        mDownloadpb?.max = 100
+        mDownloadpb?.progress = 50
+
     }
+
 
     fun setDownloadprogress(progress: Int) {
         mDownloadmsg?.text = "当前下载的进度是;" + progress.toString() + "%"
         mDownloadpb?.progress = progress
+    }
+
+    override fun show() {
+        super.show()
+        val window = this.window
+        val attributes = window.attributes
+        attributes.width = UIUtils.getScreenwidth()?.times(0.85f)!!.toInt()
+        attributes.height = attributes.width.times(9 * 1.0f / 16).toInt()
+        window.attributes = attributes
     }
 }

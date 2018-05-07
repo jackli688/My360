@@ -1,4 +1,4 @@
-package com.guard
+package com.guard.ui.activities
 
 import android.Manifest
 import android.animation.Animator
@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import com.guard.R
 import com.guard.model.bean.URLServices
 import com.guard.model.utils.BaseRetrofit
 import com.guard.model.utils.PackageUtil
@@ -197,6 +198,7 @@ class SplashActivity : AppCompatActivity() {
         )
         alphaAnimator.duration = 3000
         alphaAnimator.startDelay = 500
+
         alphaAnimator.run {
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
