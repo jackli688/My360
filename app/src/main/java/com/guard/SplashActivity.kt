@@ -136,7 +136,8 @@ class SplashActivity : AppCompatActivity() {
         intent.action = android.content.Intent.ACTION_VIEW
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-            intent.setDataAndType(FileProvider.getUriForFile(baseContext, baseContext.packageName + ".com.guard.model.genericfileprovider", file),
+            intent.setDataAndType(FileProvider.getUriForFile(baseContext, baseContext.packageName +
+                    ".com.guard.model.providers.genericfileprovider", file),
                     "application/vnd.android.package-archive")
         } else {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

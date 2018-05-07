@@ -1,4 +1,4 @@
-package com.guard.model
+package com.guard.model.providers
 
 import android.support.v4.content.FileProvider
 
@@ -11,4 +11,6 @@ import android.support.v4.content.FileProvider
  * @date: 2018/5/7
  * @time: 19:09
  */
-class GenericFileProvider : FileProvider() {}
+class GenericFileProvider : FileProvider() {
+
+}

@@ -26,8 +26,8 @@
 
 
         <provider
-            android:name=".model.GenericFileProvider"
-            android:authorities="${applicationId}.com.guard.model.genericfileprovider"
+            android:name=".model.providers.GenericFileProvider"
+            android:authorities="${applicationId}.com.guard.model.providers.genericfileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
