@@ -1,4 +1,4 @@
-package com.mguard
+package com.guard
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

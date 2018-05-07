@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="unit_10dp">10dp</dimen>
+    <dimen name="unit_50dp">50dp</dimen>
+
+    <dimen name="margin_10dp">@dimen/unit_10dp</dimen>
+    <dimen name="width_50dp">@dimen/unit_50dp</dimen>
+    <dimen name="height_50dp">@dimen/unit_50dp</dimen>
+</resources>

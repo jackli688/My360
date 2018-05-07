@@ -1,4 +1,4 @@
-package com.mguard
+package com.guard
 
 import org.junit.Test
 
