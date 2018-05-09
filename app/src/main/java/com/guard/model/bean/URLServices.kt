@@ -36,7 +36,7 @@ class URLServices {
     }
 
 
-    class LastVersion() {
+    class LastVersion {
         var code: Int? = null
         var msg: String? = null
         var versionCode: Int? = null

@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--dp-->
+    <dimen name="unit_0dp">0dp</dimen>
+    <dimen name="unit_1dp">1dp</dimen>
+    <dimen name="unit_2dp">2dp</dimen>
+    <dimen name="unit_5dp">5dp</dimen>
     <dimen name="unit_10dp">10dp</dimen>
+    <dimen name="unit_16dp">16dp</dimen>
+    <dimen name="unit_30dp">30dp</dimen>
+    <dimen name="unit_32dp">32dp</dimen>
     <dimen name="unit_50dp">50dp</dimen>
+    <dimen name="unit_80dp">80dp</dimen>
 
-    <dimen name="margin_10dp">@dimen/unit_10dp</dimen>
+    <!--width and height-->
     <dimen name="width_50dp">@dimen/unit_50dp</dimen>
+    <dimen name="width_80dp">@dimen/unit_80dp</dimen>
     <dimen name="height_50dp">@dimen/unit_50dp</dimen>
+    <dimen name="height_80dp">@dimen/unit_80dp</dimen>
+
+    <!--margin-->
+    <dimen name="margin_10dp">@dimen/unit_10dp</dimen>
 
 
+    <!--sp-->
     <dimen name="unit_14sp">14sp</dimen>
     <dimen name="unit_16sp">16sp</dimen>
-    <dimen name="unit_2dp">2dp</dimen>
-    <dimen name="unit_30dp">30dp</dimen>
-    <dimen name="unit_1dp">1dp</dimen>
-    <dimen name="unit_5dp">5dp</dimen>
+    <dimen name="unit_24sp">24sp</dimen>
+    <dimen name="unit_20sp">20sp</dimen>
+    <dimen name="unit_18sp">18sp</dimen>
 </resources>

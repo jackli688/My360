@@ -51,7 +51,7 @@ class SplashActivity : AppCompatActivity() {
         requestPermission()
         val mRootView: ConstraintLayout = findViewById(R.id.splash_rootView)
         //View :展示动画
-        executAnimator(mRootView)
+        executeAnimator(mRootView)
     }
 
     private fun requestPermission() {
@@ -188,7 +188,7 @@ class SplashActivity : AppCompatActivity() {
         return PackageUtil.version.getVersionCode(this)
     }
 
-    private fun executAnimator(mRootView: View) {
+    private fun executeAnimator(mRootView: View) {
 
         val alphaAnimator = ObjectAnimator.ofFloat(
                 mRootView,
@@ -203,24 +203,23 @@ class SplashActivity : AppCompatActivity() {
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
                     //model:检查是否有最新版本，
-                    checkServerversion()
+                    remoteApkmsg()
                     //获取应用当前的版本号
                     localCode = checkLocalversionCode()
                 }
 
-                override fun onAnimationEnd(animation: Animator?) {
-                    if (versionBean?.versionCode!! > localCode) {
-                        showUpdateDialog(versionBean!!.apkUrl)
-                    } else {
-                        enterHomeActivity()
-                    }
-                }
+                override fun onAnimationEnd(animation: Animator?) =
+                        if (versionBean?.versionCode != null && versionBean?.versionCode!! > localCode) {
+                            showUpdateDialog(versionBean!!.apkUrl)
+                        } else {
+                            enterHomeActivity()
+                        }
             })
             start()
         }
     }
 
-    private fun checkServerversion() {
+    private fun remoteApkmsg() {
         val retrofit: Retrofit = BaseRetrofit.getRetrofit(URLServices.API_URL.Base_Server)
         val updateService = retrofit.create(URLServices.UpdateService::class.java)
         val call = updateService.getLastversion()
