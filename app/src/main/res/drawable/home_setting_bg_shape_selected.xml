@@ -6,5 +6,5 @@
         android:width="@dimen/unit_32dp"
         android:height="@dimen/unit_32dp" />
 
-    <solid android:color="@android:color/black" />
+    <solid android:color="@color/white_p12" />
 </shape>
