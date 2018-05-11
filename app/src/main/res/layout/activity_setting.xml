@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center_horizontal"
+        android:text="@string/settingcenter"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/unit_24sp" />
+
+    <com.guard.ui.customwidgets.SettingItemView
+        android:id="@+id/autoUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/unit_10dp"
+        android:background="@drawable/setting_first_item_selector" />
+
+    <com.guard.ui.customwidgets.SettingItemView
+        android:id="@+id/harassmentInterception"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_last_item_selector" />
+
+
+    <com.guard.ui.customwidgets.SettingItemView
+        android:id="@+id/attributionStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/unit_10dp"
+        android:background="@drawable/setting_first_item_selector" />
+
+
+    <com.guard.ui.customwidgets.SettingItemView
+        android:id="@+id/attribution"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_last_item_selector" />
+</LinearLayout>

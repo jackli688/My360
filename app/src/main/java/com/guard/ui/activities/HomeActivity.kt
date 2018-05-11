@@ -1,6 +1,7 @@
 package com.guard.ui.activities
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.GridView
@@ -12,6 +13,9 @@ import com.guard.R
 import com.guard.model.bean.HomeItemBean
 import com.guard.ui.adapters.HomeAdapter
 
+/**
+ * https://www.kotlincn.net/docs/reference/keyword-reference.html?q=&p=0#%E7%A1%AC%E5%85%B3%E9%94%AE%E5%AD%97
+ */
 class HomeActivity : AppCompatActivity() {
 
     var mHomeLogo: ImageView? = null
@@ -93,7 +97,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun enterSettingActivity() {
-
+        startActivity(Intent(this, SettingActivity::class.java))
     }
 
     private fun setLogoAnimation(aimView: ImageView?) {
