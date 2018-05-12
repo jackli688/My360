@@ -22,7 +22,7 @@ class HomeItemBean {
 
     init {
 //        mIcon = icon
-//        mTitle = title
+//        mTitleview = title
 //        mDesc = mes
         Log.d(Tag, "init run")
     }

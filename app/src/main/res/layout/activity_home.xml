@@ -83,6 +83,6 @@
         android:id="@+id/home_gridView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/unit_0dp"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:numColumns="2" />
 </LinearLayout>

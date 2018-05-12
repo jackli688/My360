@@ -18,9 +18,11 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import com.guard.R
+import com.guard.model.bean.Constants
 import com.guard.model.bean.URLServices
 import com.guard.model.utils.BaseRetrofit
 import com.guard.model.utils.PackageUtil
+import com.guard.model.utils.SharePreferencesUtils
 import com.guard.ui.customwidgets.DownLoadDialog
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -209,7 +211,9 @@ class SplashActivity : AppCompatActivity() {
                 }
 
                 override fun onAnimationEnd(animation: Animator?) =
-                        if (versionBean?.versionCode != null && versionBean?.versionCode!! > localCode) {
+                        if (versionBean?.versionCode != null
+                                && versionBean?.versionCode!! > localCode
+                                && SharePreferencesUtils.getBoolean(Constants.SPFILEA, Constants.SETTING_AUTOUPDATE, false)) {
                             showUpdateDialog(versionBean!!.apkUrl)
                         } else {
                             enterHomeActivity()

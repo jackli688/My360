@@ -1,9 +1,19 @@
 package com.guard.ui.activities
 
+import android.Manifest
 import android.animation.ObjectAnimator
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.support.annotation.RequiresApi
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.WindowManager
 import android.widget.GridView
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -12,6 +22,7 @@ import com.guard.App
 import com.guard.R
 import com.guard.model.bean.HomeItemBean
 import com.guard.ui.adapters.HomeAdapter
+
 
 /**
  * https://www.kotlincn.net/docs/reference/keyword-reference.html?q=&p=0#%E7%A1%AC%E5%85%B3%E9%94%AE%E5%AD%97
@@ -51,7 +62,10 @@ class HomeActivity : AppCompatActivity() {
         mHomeGridView?.setOnItemClickListener { parent, view, position, id ->
             Toast.makeText(this, "当前条目点击的位置是:" + position, Toast.LENGTH_SHORT).show()
             when (position) {
-                0 -> enterAntiTheftActivity()
+                0 -> {
+                    requestPermission()
+                    enterAntiTheftActivity()
+                }
                 1 -> enterHarassmentInterceptionActivity()
                 2 -> enterSoftManagerActivity()
                 3 -> enterProcessManagerActivity()
@@ -62,6 +76,36 @@ class HomeActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    private fun showSetpassWordDialog() {
+        val builder = AlertDialog.Builder(App.getContext())
+        val view = LayoutInflater.from(App.getContext()).inflate(R.layout.home_setpassword_dialog, null, false)
+        builder.setView(view)
+        val dialog = builder.create()
+        dialog.window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
+        dialog.show()
+    }
+
+    private fun requestPermission() {
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SYSTEM_ALERT_WINDOW) != PackageManager.PERMISSION_GRANTED) {
+//            //进行授权
+//            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SYSTEM_ALERT_WINDOW), 1)
+//        } else {
+//            showSetpassWordDialog ()
+//        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SYSTEM_ALERT_WINDOW) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!Settings.canDrawOverlays(this)) {
+                    val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                            Uri.parse("package:$packageName"))
+                    startActivityForResult(intent, 1)
+                }
+            }
+        } else {
+            showSetpassWordDialog()
+        }
+
     }
 
     private fun enterClearCacheActivity() {
@@ -120,6 +164,31 @@ class HomeActivity : AppCompatActivity() {
             ItemDatas.add(HomeItemBean(Icons[i], Titles[i], Descs[i]))
         }
 
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1 && grantResults.isNotEmpty()
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            showSetpassWordDialog()
+        } else {
+            requestPermission()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1) {
+            if (!Settings.canDrawOverlays(this)) {
+                // You don't have permission
+                requestPermission()
+            } else {
+                // Do as per your logic
+                showSetpassWordDialog()
+            }
+
+        }
     }
 
 

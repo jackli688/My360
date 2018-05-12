@@ -31,4 +31,5 @@
     <dimen name="unit_18sp">18sp</dimen>
     <dimen name="unit_200dp">200dp</dimen>
     <dimen name="unit_100dp">100dp</dimen>
+    <dimen name="unit_8dp">8dp</dimen>
 </resources>

@@ -1,5 +1,6 @@
 package com.guard
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 
@@ -22,6 +23,10 @@ class App : Application() {
 
         fun getContext(context: Context): Context {
             return context.applicationContext
+        }
+
+        fun getContext(activity: Activity): Context {
+            return activity.baseContext
         }
 
         fun getContext(): Context? {
