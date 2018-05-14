@@ -9,15 +9,18 @@ package com.guard.model.bean
  * @date: 2018/5/11
  * @time: 19:01
  */
-class Constants {
+object Constants {
 
-    companion object {
-        const val SPFILEA = "SPFILEA"
-        const val SETTING_AUTOUPDATE = "AUTO_UPDATE"
-        const val SETTING_HARASSMENTINTERCEPTION = "HARASSMENTINTERCEPTION"
-        const val SETTING_ATTRIBUTION = "ATTRIBUTION"
-        const val ISTURE = true
-        const val ISFALSE = false
-    }
-
+    const val SPFILEA = "SPFILEA"
+    const val SETTING_AUTOUPDATE = "AUTO_UPDATE"
+    const val SETTING_HARASSMENTINTERCEPTION = "harassmentinterception"
+    const val SETTING_ATTRIBUTION = "attribution"
+    const val ISTURE = true
+    const val ISFALSE = false
+    const val ANTITHEFTPASSWORD = "antitheftpassword"
+    const val ISFIRSTENTERANTITHEFTACTIVITY = "isfirstenterantitheftactivity"
+    const val ISRELSIM = "isRelativeSIM"
+    const val SAFENUMBER = "safeNumber"
+    const val SETUPASKSAFENUMBEASKRCODE = 1000
+    const val setupasksafenumberREQUESTcode = 1001
 }

@@ -7,4 +7,7 @@
     <color name="white_p60">#99FFFFFF</color>
     <color name="white_p12">#22FFFFFF</color>
     <color name="home_item_desc_text_color">@android:color/darker_gray</color>
+    <color name="black_p40">#99000000</color>
+    <color name="lostfind_press_color">#9CFFCE</color>
+    <color name="lostfind_default_color">#FFFFFF</color>
 </resources>

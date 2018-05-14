@@ -27,6 +27,13 @@
             android:launchMode="singleTask" />
 
         <activity android:name=".ui.activities.SettingActivity" />
+        <activity android:name=".ui.activities.LostFindActivity" />
+        <activity android:name=".ui.activities.SetUp1Activity" />
+        <activity android:name=".ui.activities.SetUp2Activity" />
+        <activity android:name=".ui.activities.SetUp3Activity" />
+        <activity android:name=".ui.activities.SetUp4Activity" />
+        <activity android:name=".ui.activities.SetUp5Activity" />
+        <activity android:name=".ui.activities.ContactsActivity" />
 
 
         <provider

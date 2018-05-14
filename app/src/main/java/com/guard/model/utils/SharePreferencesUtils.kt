@@ -35,7 +35,7 @@ object SharePreferencesUtils {
         sp?.edit()?.putString(key, value)?.apply()
     }
 
-    fun getString(fileName: String, key: String, defValue: String): String? {
+    fun getString(fileName: String, key: String, defValue: String?): String? {
         if (sp == null)
             sp = App.getContext()?.getSharedPreferences(fileName, Context.MODE_PRIVATE)
         return sp?.getString(key, defValue)

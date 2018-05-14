@@ -15,4 +15,5 @@
     <string name="home_setpassword_dialog_title">初始化密码设置</string>
     <string name="home_setpasswor_dialog_inputpassword_hint">请输入密码</string>
     <string name="home_setpasswor_dialog_inputpasswordagain_hint">请再次输入密码</string>
+    <string name="extrapassword">密码验证</string>
 </resources>
