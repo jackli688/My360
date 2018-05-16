@@ -50,6 +50,16 @@ class SetUp3Activity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            Constants.SETUPASKSAFENUMBEASKRCODE -> {
+                when (resultCode) {
+                    Constants.setupasksafenumberREQUESTcode -> {
+                        val safeNumber = data?.getStringExtra(Constants.SAFENUMBER)
+                        mInputSafeNumber?.setText(safeNumber)
+                    }
+                }
+            }
+        }
     }
 
 }

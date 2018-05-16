@@ -20,6 +20,7 @@ object Constants {
     const val ANTITHEFTPASSWORD = "antitheftpassword"
     const val ISFIRSTENTERANTITHEFTACTIVITY = "isfirstenterantitheftactivity"
     const val ISRELSIM = "isRelativeSIM"
+    const val SIMSERIALNUMBER = "simSerialNumber"
     const val SAFENUMBER = "safeNumber"
     const val SETUPASKSAFENUMBEASKRCODE = 1000
     const val setupasksafenumberREQUESTcode = 1001

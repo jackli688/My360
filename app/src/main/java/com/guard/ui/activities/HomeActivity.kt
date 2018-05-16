@@ -118,15 +118,15 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showSetpassWordDialog() {
-        val builder = AlertDialog.Builder(App.getContext())
-        val view = LayoutInflater.from(App.getContext()).inflate(R.layout.home_setpassword_dialog, null, false)
+        val builder = AlertDialog.Builder(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.home_setpassword_dialog, null, false)
         val password = view.findViewById<EditText>(R.id.homesetpassword_et_psw)
         val passwordConfirm = view.findViewById<EditText>(R.id.homesetpassword_et_confirm)
         val okey = view.findViewById<Button>(R.id.homesetpassword_btn_ok)
         val cancle = view.findViewById<Button>(R.id.homesetpassword_btn_cancel)
         builder.setView(view)
         val dialog = builder.create()
-        dialog.window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
+//        dialog.window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
         okey.setOnClickListener {
             val code1 = password.text.toString()
             if (code1.isEmpty()) {
