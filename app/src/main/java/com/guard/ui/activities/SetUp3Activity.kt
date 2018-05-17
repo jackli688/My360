@@ -53,7 +53,7 @@ class SetUp3Activity : AppCompatActivity() {
         when (requestCode) {
             Constants.SETUPASKSAFENUMBEASKRCODE -> {
                 when (resultCode) {
-                    Constants.setupasksafenumberREQUESTcode -> {
+                    Constants.SETUPASKSAFENUMBERREQUESTCODE -> {
                         val safeNumber = data?.getStringExtra(Constants.SAFENUMBER)
                         mInputSafeNumber?.setText(safeNumber)
                     }

@@ -3,7 +3,6 @@ package com.guard.ui.activities
 import android.Manifest
 import android.animation.ObjectAnimator
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -15,8 +14,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
 import android.widget.*
 import com.guard.App
 import com.guard.R
@@ -250,6 +247,7 @@ class HomeActivity : AppCompatActivity() {
             requestPermission()
         }
     }
+
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

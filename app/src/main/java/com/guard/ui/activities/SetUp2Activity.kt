@@ -1,6 +1,7 @@
 package com.guard.ui.activities
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -24,34 +25,37 @@ import com.guard.model.utils.SharePreferencesUtils
 class SetUp2Activity : AppCompatActivity() {
 
     var lockIcon: ImageView? = null
-    var isRelativeSim: Boolean? = false
     var ownPermission: Boolean? = false
+    @SuppressLint("HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_up2)
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+        ownPermission = if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), 1)
-            ownPermission = false
+            false
         } else {
-            ownPermission = true
+            true
         }
         val mRelSim = findViewById<RelativeLayout>(R.id.setup2_rel_sim)
         lockIcon = findViewById(R.id.setup2_iv_lockicon)
+        var sp_sim = SharePreferencesUtils.getString(Constants.SPFILEA, Constants.SIMSERIALNUMBER, null)
+        if (TextUtils.isEmpty(sp_sim)) {
+            lockIcon?.setImageResource(R.drawable.unlock)
+        } else {
+            lockIcon?.setImageResource(R.drawable.lock)
+        }
         mRelSim.setOnClickListener {
             if (ownPermission as Boolean) {
-                isRelativeSim = !isRelativeSim!!
-                var sp_sim = SharePreferencesUtils.getString(Constants.SPFILEA, Constants.SIMSERIALNUMBER, null)
+                sp_sim = SharePreferencesUtils.getString(Constants.SPFILEA, Constants.SIMSERIALNUMBER, null)
                 if (TextUtils.isEmpty(sp_sim)) {
                     var tel = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
                     sp_sim = tel.simSerialNumber
-                    SharePreferencesUtils.setString(Constants.SPFILEA, Constants.SIMSERIALNUMBER, sp_sim)
+                    SharePreferencesUtils.setString(Constants.SPFILEA, Constants.SIMSERIALNUMBER, sp_sim!!)
                     lockIcon?.setImageResource(R.drawable.lock)
-                    isRelativeSim = true
                 } else {
                     SharePreferencesUtils.setString(Constants.SPFILEA, Constants.SIMSERIALNUMBER, "")
                     lockIcon?.setImageResource(R.drawable.unlock)
-                    isRelativeSim = false
                 }
             } else {
                 Toast.makeText(this, "请授予读取SIM卡权限", Toast.LENGTH_SHORT).show()
@@ -60,7 +64,7 @@ class SetUp2Activity : AppCompatActivity() {
     }
 
     fun next(view: View) {
-        if (isRelativeSim!!) {
+        if (!TextUtils.isEmpty(SharePreferencesUtils.getString(Constants.SPFILEA, Constants.SIMSERIALNUMBER, null))) {
             startActivity(Intent(this, SetUp3Activity::class.java))
             overridePendingTransition(R.anim.setup_next_enter,
                     R.anim.setup_next_exit)

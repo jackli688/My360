@@ -2,10 +2,7 @@ package com.guard.model.bean
 
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Streaming
-import retrofit2.http.Url
+import retrofit2.http.*
 
 /**
  * @author: jackli
@@ -20,6 +17,7 @@ class URLServices {
 
     object API_URL {
         val API_URL = "https://api.github.com"
+        var Location_Server = "http://lbs.juhe.cn/api/getaddressbylngb"
         var Base_Server = "http://192.168.50.121:8080"
     }
 
@@ -66,6 +64,12 @@ class URLServices {
         @Streaming
         @GET
         fun downloadFileStream(@Url fileUrl: String): Call<ResponseBody>
+    }
+
+    interface AskLocationService {
+
+        @GET
+        fun askLocation(@Query("lngx") arg0: Double, @Query("lngy") arg1: Double): Call<ResponseBody>
     }
 
 

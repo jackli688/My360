@@ -16,4 +16,6 @@
     <string name="home_setpasswor_dialog_inputpassword_hint">请输入密码</string>
     <string name="home_setpasswor_dialog_inputpasswordagain_hint">请再次输入密码</string>
     <string name="extrapassword">密码验证</string>
+    <string name="sample_device_admin_description">远程锁屏</string>
+    <string name="sample_device_admin">my360</string>
 </resources>

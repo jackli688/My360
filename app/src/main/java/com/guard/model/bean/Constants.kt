@@ -23,5 +23,6 @@ object Constants {
     const val SIMSERIALNUMBER = "simSerialNumber"
     const val SAFENUMBER = "safeNumber"
     const val SETUPASKSAFENUMBEASKRCODE = 1000
-    const val setupasksafenumberREQUESTcode = 1001
+    const val SETUPASKSAFENUMBERREQUESTCODE = 1001
+    const val LOSTFIND_REL_PROTECTED = "lostfind_rel_protected"
 }

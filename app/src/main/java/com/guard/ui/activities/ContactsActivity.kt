@@ -8,7 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.provider.ContactsContract
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -35,7 +34,6 @@ class ContactsActivity : AppCompatActivity() {
     private lateinit var mContactsView: RecyclerView
     private lateinit var contactsAdapter: ContactsAdapter
     private lateinit var progressBar: ProgressBar
-    private lateinit var mHandler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +49,7 @@ class ContactsActivity : AppCompatActivity() {
                 if (mContactsData.isNotEmpty()) {
                     val intent = Intent(this@ContactsActivity, SetUp3Activity::class.java)
                     intent.putExtra(Constants.SAFENUMBER, mContactsData[position].number)
-                    setResult(Constants.setupasksafenumberREQUESTcode, intent)
+                    setResult(Constants.SETUPASKSAFENUMBERREQUESTCODE, intent)
                     this@ContactsActivity.finish()
                 }
             }
