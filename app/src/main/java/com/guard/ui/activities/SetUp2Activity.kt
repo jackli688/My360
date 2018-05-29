@@ -14,6 +14,9 @@ import android.support.v7.app.AppCompatActivity
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import android.text.TextUtils
+import android.util.Log
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -26,6 +29,8 @@ class SetUp2Activity : AppCompatActivity() {
 
     var lockIcon: ImageView? = null
     var ownPermission: Boolean? = false
+    val TAG: String = this.javaClass.simpleName
+    lateinit var mGestureDetector: GestureDetector
     @SuppressLint("HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +66,43 @@ class SetUp2Activity : AppCompatActivity() {
                 Toast.makeText(this, "请授予读取SIM卡权限", Toast.LENGTH_SHORT).show()
             }
         }
+        mGestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            var startX: Float = 0.0f
+            var startY: Float = 0.0f
+            var endX: Float = 0.0f
+            var endY: Float = 0.0f
+            override fun onDown(e: MotionEvent?): Boolean {
+                startX = e?.rawX ?: 0.0f
+                startY = e?.rawX ?: 0.0f
+                return super.onDown(e)
+            }
+
+            override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+                Log.e(TAG, "distanceX:$distanceX")
+                if (distanceX > 50) {
+                    if (!TextUtils.isEmpty(SharePreferencesUtils.getString(Constants.SPFILEA, Constants.SIMSERIALNUMBER, null))) {
+                        startActivity(Intent(this@SetUp2Activity, SetUp3Activity::class.java))
+                        overridePendingTransition(R.anim.setup_next_enter,
+                                R.anim.setup_next_exit)
+                        finish()
+                    } else {
+                        Toast.makeText(this@SetUp2Activity, "请先绑定SIM卡", Toast.LENGTH_SHORT).show()
+                    }
+                } else if (distanceX < -50) {
+                    startActivity(Intent(this@SetUp2Activity, SetUp1Activity::class.java))
+                    overridePendingTransition(R.anim.setup_pre_enter,
+                            R.anim.setup_pre_exit)
+                    finish()
+                }
+                return super.onScroll(e1, e2, distanceX, distanceY)
+            }
+        })
+    }
+
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        mGestureDetector.onTouchEvent(event)
+        return super.onTouchEvent(event)
     }
 
     fun next(view: View) {

@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat
 import android.telephony.SmsManager
 import android.telephony.TelephonyManager
 import android.text.TextUtils
+import android.util.Log
 import com.guard.model.bean.Constants
 import com.guard.model.utils.SharePreferencesUtils
 
@@ -28,6 +29,7 @@ class BootCompleteReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
         val sim = SharePreferencesUtils.getString(Constants.SPFILEA, Constants.SIMSERIALNUMBER, null)
+        Log.e("jiwei", "手机重启的广播接收成功")
         if (!TextUtils.isEmpty(sim)) {
             val telephonyManager = context?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE)

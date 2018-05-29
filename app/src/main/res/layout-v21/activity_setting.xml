@@ -24,18 +24,23 @@
             android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
 
+
     <com.guard.ui.customwidgets.SettingItemView
         android:id="@+id/autoUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/unit_10dp"
-        android:background="@drawable/setting_first_item_selector" />
+        android:background="@drawable/setting_first_item_selector"
+        app:isToggle="false"
+        app:titleText="@string/autoUpdate" />
 
     <com.guard.ui.customwidgets.SettingItemView
         android:id="@+id/harassmentInterception"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/setting_last_item_selector" />
+        android:background="@drawable/setting_last_item_selector"
+        app:isToggle="false"
+        app:titleText="@string/harassmentInterception" />
 
 
     <com.guard.ui.customwidgets.SettingItemView
@@ -43,12 +48,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/unit_10dp"
-        android:background="@drawable/setting_first_item_selector" />
+        android:background="@drawable/setting_first_item_selector"
+        app:isToggle="false"
+        app:titleText="@string/attribution" />
 
 
     <com.guard.ui.customwidgets.SettingItemView
         android:id="@+id/attribution"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/setting_last_item_selector" />
+        android:background="@drawable/setting_last_item_selector"
+        app:showToggle="false"
+        app:titleText="@string/attributionStyle" />
 </LinearLayout>

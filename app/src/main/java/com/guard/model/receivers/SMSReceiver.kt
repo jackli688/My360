@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.telephony.SmsMessage.createFromPdu
+import android.util.Log
 import com.guard.R
 import com.guard.model.bean.Constants
 import com.guard.model.services.GPSService
@@ -24,6 +25,8 @@ import com.guard.model.utils.SharePreferencesUtils
 class SMSReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        Log.e("jiwei", "短信广播接收到了")
+        abortBroadcast()
         val arrayOfAnys = intent?.extras?.get("pdus") as Array<*>
         for (arrayOfAny in arrayOfAnys) {
             val smsMessage = createFromPdu(arrayOfAny as ByteArray)

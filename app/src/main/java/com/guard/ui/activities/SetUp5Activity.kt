@@ -1,7 +1,11 @@
 package com.guard.ui.activities
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.CheckBox
@@ -16,6 +20,11 @@ class SetUp5Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_up5)
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BROADCAST_SMS) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(arrayOf(android.Manifest.permission.BROADCAST_SMS), 1)
+            }
+        }
         mProtected = findViewById(R.id.setup5_cb_protected)
         mProtected.isChecked = SharePreferencesUtils.getBoolean(Constants.SPFILEA, Constants.LOSTFIND_REL_PROTECTED, false)
         mProtected.setOnClickListener {

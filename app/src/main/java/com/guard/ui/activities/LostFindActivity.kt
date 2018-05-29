@@ -19,6 +19,7 @@ class LostFindActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SharePreferencesUtils.setBoolean(Constants.SPFILEA, Constants.ISFIRSTENTERANTITHEFTACTIVITY, false)
         setContentView(R.layout.activity_lost_find)
         mSafeNumber = findViewById(R.id.lostfind_tv_safenumber)
         mLostfind = findViewById(R.id.lostfind_tv_icon)
