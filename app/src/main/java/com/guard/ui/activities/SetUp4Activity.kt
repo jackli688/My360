@@ -5,16 +5,13 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.Toast
 import com.guard.R
 import com.guard.model.receivers.AdminReceiver
 
-class SetUp4Activity : AppCompatActivity() {
-
+class SetUp4Activity : BaseSetUpActivity() {
     private val REQUEST_CODE_ENABLE_ADMIN = 100
     lateinit var mRelAdmin: RelativeLayout
     lateinit var mIcon: ImageView
@@ -22,7 +19,6 @@ class SetUp4Activity : AppCompatActivity() {
     lateinit var mDeviceComponentName: ComponentName
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_set_up4)
         mRelAdmin = findViewById(R.id.setup4_rel_admin)
         mIcon = findViewById(R.id.setup4_iv_icon)
         mDevicePolicyManager = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
@@ -61,7 +57,14 @@ class SetUp4Activity : AppCompatActivity() {
         }
     }
 
-    fun next(view: View) {
+    override fun turnPreviousActivity() {
+        startActivity(Intent(this, SetUp3Activity::class.java))
+        overridePendingTransition(R.anim.setup_pre_enter,
+                R.anim.setup_pre_exit)
+        finish()
+    }
+
+    override fun turnNextActivity() {
         if (mDevicePolicyManager.isAdminActive(mDeviceComponentName)) {
             startActivity(Intent(this, SetUp5Activity::class.java))
             overridePendingTransition(R.anim.setup_next_enter,
@@ -72,11 +75,16 @@ class SetUp4Activity : AppCompatActivity() {
         }
     }
 
-    fun pre(view: View) {
-        startActivity(Intent(this, SetUp3Activity::class.java))
-        overridePendingTransition(R.anim.setup_pre_enter,
-                R.anim.setup_pre_exit)
-        finish()
+    override fun getContextView(): Int {
+        return R.layout.activity_set_up4
+    }
+
+    override fun hasNext(): Boolean {
+        return true
+    }
+
+    override fun hasPrevious(): Boolean {
+        return true
     }
 
 }

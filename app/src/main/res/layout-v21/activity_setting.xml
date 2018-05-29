@@ -60,4 +60,5 @@
         android:background="@drawable/setting_last_item_selector"
         app:showToggle="false"
         app:titleText="@string/attributionStyle" />
+
 </LinearLayout>
