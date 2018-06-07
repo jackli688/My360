@@ -44,7 +44,7 @@
 
 
     <com.guard.ui.customwidgets.SettingItemView
-        android:id="@+id/attributionStyle"
+        android:id="@+id/attribution"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/unit_10dp"
@@ -54,7 +54,7 @@
 
 
     <com.guard.ui.customwidgets.SettingItemView
-        android:id="@+id/attribution"
+        android:id="@+id/attributionStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/setting_last_item_selector"

@@ -1,0 +1,91 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/ActivityTitle"
+        android:text="添加黑名单" />
+
+    <TextView
+        style="@style/SetUpContenttitle"
+        android:text="电话号码" />
+
+    <EditText
+        android:id="@+id/add_et_blacknumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_blacknumber_edittext_bg"
+        android:hint="号码不能为空"
+        android:inputType="phone" />
+
+    <TextView
+        style="@style/SetUpContenttitle"
+        android:text="拦截类型" />
+    <!-- RadioGroup : 单选按钮组
+         RadioButton ： 单选按钮
+    -->
+    <RadioGroup
+        android:id="@+id/add_rg_modes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+        <!-- checked : 按钮是否选中，true：选中，false：不旋踵 -->
+        <RadioButton
+            android:id="@+id/add_rbtn_call"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="电话" />
+
+        <RadioButton
+            android:id="@+id/add_rbtn_sms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="短信" />
+
+        <RadioButton
+            android:id="@+id/add_rbtn_all"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="全部" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/home_setpassword_dialog_ok"
+            android:onClick="save"
+            android:text="保存"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/home_setpassword_dialog_cancel"
+            android:onClick="cancel"
+            android:text="取消"
+            android:textColor="#000000" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

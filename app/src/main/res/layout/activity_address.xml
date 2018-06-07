@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/ActivityTitle"
+        android:text="号码归属地查询" />
+
+    <EditText
+        android:id="@+id/address_et_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_blacknumber_edittext_bg"
+        android:hint="请输入要查询的号码"
+        android:inputType="phone" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/home_setpassword_dialog_ok"
+        android:onClick="getaddress"
+        android:text="查询"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/address_tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="归属地:"
+        android:textColor="#99000000"
+        android:textSize="20sp" />
+
+
+</LinearLayout>

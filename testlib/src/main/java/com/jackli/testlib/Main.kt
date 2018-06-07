@@ -13,6 +13,4 @@ import jdk.nashorn.internal.objects.Global.println
  */
 fun main(args: Array<String>) {
     println("Hello World")
-    val mainTest = MainTest()
 }
-

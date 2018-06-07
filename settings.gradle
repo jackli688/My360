@@ -1,1 +1,3 @@
 include ':app', ':testlib', ':mylibrary'
+include ':androidBeamDemo'
+include ':apiDemos'

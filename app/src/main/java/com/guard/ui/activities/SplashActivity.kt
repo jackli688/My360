@@ -4,13 +4,16 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.*
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -29,9 +32,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import java.io.BufferedOutputStream
-import java.io.File
-import java.io.FileOutputStream
+import java.io.*
 import java.lang.ref.WeakReference
 
 /**
@@ -42,9 +43,10 @@ class SplashActivity : AppCompatActivity() {
     var localCode: Int = 0
     var versionBean: URLServices.LastVersion? = null
     var downLoadDialog: DownLoadDialog? = null
-    var mHandler: SplashHandler = SplashHandler(this)
-    var savePath: String? = null
-    val REQUESTCODE = 1
+    private var mHandler: SplashHandler = SplashHandler(this)
+    private var savePath: String? = null
+    private val REQUESTCODE = 1
+    private val Tag = SplashActivity::class.java.simpleName!!
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,14 +59,65 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun requestPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            //进行授权
-            ActivityCompat.requestPermissions(this, Array(1, { Manifest.permission.WRITE_EXTERNAL_STORAGE }), 1)
-        } else {
+        val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this@SplashActivity, permission)) {
 
+            } else {
+                //进行授权
+                ActivityCompat.requestPermissions(this, Array(1, { permission }), 1)
+            }
+        } else {
+            copyDb("address.db")
         }
 
     }
+
+
+    @SuppressLint("SdCardPath")
+    private fun copyDb(name: String) {
+        val copyTask: AsyncTask<Void, Void, Void> = @SuppressLint("StaticFieldLeak")
+        object : AsyncTask<Void, Void, Void>() {
+            override fun doInBackground(vararg params: Void?): Void? {
+//                val outFileName = "/data/data/$packageName/databases"
+                val outFileName = filesDir
+                val file = File(outFileName, name)
+                var myInutStream: InputStream? = null
+                var bops: BufferedOutputStream? = null
+                if (!file.exists()) {
+                    file.createNewFile()
+                    try {
+                        myInutStream = assets.open(name)
+//                        val filesDir = this.filesDir
+//                        Log.e("111", "filesDir:$filesDir")
+                        bops = BufferedOutputStream(FileOutputStream(file))
+                        val bytes = ByteArray(4096)
+                        var len = -1
+                        while (true) {
+                            len = myInutStream.read(bytes, 0, bytes.size)
+                            if (len == -1) {
+                                break
+                            } else {
+                                bops.write(bytes, 0, len)
+                            }
+                        }
+                        bops.flush()
+                        Log.e(Tag, name + "copy succeed")
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                        file.delete()
+                    } finally {
+                        myInutStream?.close()
+                        bops?.close()
+                    }
+
+                }
+                return null
+            }
+        }
+        copyTask.execute()
+    }
+
 
     private fun enterHomeActivity() {
         startActivity(Intent(this, HomeActivity::class.java))
@@ -144,14 +197,14 @@ class SplashActivity : AppCompatActivity() {
                     "application/vnd.android.package-archive")
         } else {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            intent.setDataAndType(Uri.fromFile(file!!), "application/vnd.android.package-archive")
+            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive")
         }
         startActivityForResult(intent, REQUESTCODE)
     }
 
     private fun writeResponseBodyToDisk(name: String, body: ResponseBody?): Boolean {
         savePath = Environment.getExternalStorageDirectory().toString() + File.separator + name
-        var file = File(savePath)
+        val file = File(savePath)
         val fileReader = ByteArray(4096)
         val length = body?.contentLength()
         var fileDownloaded = 0
@@ -176,7 +229,7 @@ class SplashActivity : AppCompatActivity() {
             }
         }
         outputStream.flush()
-        outputStream?.close()
+        outputStream.close()
         return true
     }
 
@@ -277,6 +330,11 @@ class SplashActivity : AppCompatActivity() {
         if (requestCode == REQUESTCODE) {
             enterHomeActivity()
         }
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
 }

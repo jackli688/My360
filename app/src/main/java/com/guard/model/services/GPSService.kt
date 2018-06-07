@@ -11,30 +11,41 @@ import android.os.Bundle
 import android.os.IBinder
 import android.support.v4.content.ContextCompat
 import android.telephony.SmsManager
+import android.util.Log
+import android.widget.Toast
 import com.guard.model.bean.Constants
 import com.guard.model.bean.URLServices
 import com.guard.model.utils.SharePreferencesUtils
+import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
+import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class GPSService : Service() {
-
+    val TAG: String = GPSService::class.java.simpleName
+    val DEFAULT_TIMEOUT: Int = 15
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
     override fun onCreate() {
         super.onCreate()
+        Log.e(TAG, "GPSService onCreate is run")
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val myLocationListener = MyLocationListener()
-        val permission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-        if (permission == PackageManager.PERMISSION_GRANTED) {
+        val permission1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+        val permission2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+        if (permission1 == PackageManager.PERMISSION_GRANTED && permission2 == PackageManager.PERMISSION_GRANTED) {
+            Log.e(TAG, "access_coarse_location permission is run")
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, myLocationListener)
+        } else {
+            Toast.makeText(this, "获取位置权限没有给", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -57,7 +68,14 @@ class GPSService : Service() {
         }
 
         private fun getLocation(longitude: Double?, latitude: Double?) {
+            Log.e(TAG, "longitude:$longitude,latitude:$latitude")
+            val logging = HttpLoggingInterceptor()
+            logging.level = HttpLoggingInterceptor.Level.BODY
+            val okHttpBuilder = OkHttpClient.Builder()
+            okHttpBuilder.interceptors().add(logging)
+            okHttpBuilder.connectTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
             val retrofit = Retrofit.Builder()
+                    .client(okHttpBuilder.build())
                     .baseUrl(URLServices.API_URL.Location_Server)
                     .addConverterFactory(GsonConverterFactory.create()).build()
             val client = retrofit.create(URLServices.AskLocationService::class.java)
@@ -69,9 +87,11 @@ class GPSService : Service() {
                     }
 
                     override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
+                        Log.e(TAG, "onResponse is run")
                         if (response != null && response.isSuccessful) {
                             val body = response.body()
                             val responseBody = body.toString()
+                            Log.e(TAG, "responseBody:$responseBody")
                             processJson(responseBody)
                         }
                     }

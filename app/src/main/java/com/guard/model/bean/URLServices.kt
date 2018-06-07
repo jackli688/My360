@@ -17,7 +17,7 @@ class URLServices {
 
     object API_URL {
         val API_URL = "https://api.github.com"
-        var Location_Server = "http://lbs.juhe.cn/api/getaddressbylngb"
+        var Location_Server = "http://lbs.juhe.cn"
         var Base_Server = "http://192.168.50.121:8080"
     }
 
@@ -68,7 +68,7 @@ class URLServices {
 
     interface AskLocationService {
 
-        @GET
+        @GET("/api/getaddressbylngb")
         fun askLocation(@Query("lngx") arg0: Double, @Query("lngy") arg1: Double): Call<ResponseBody>
     }
 

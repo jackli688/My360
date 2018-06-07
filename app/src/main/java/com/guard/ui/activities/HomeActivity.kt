@@ -194,7 +194,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun enterHarassmentInterceptionActivity() {
-
+        startActivity(Intent(this@HomeActivity, HarassmentInterceptionActivity::class.java))
     }
 
     private fun enterAntiTheftActivity() {
@@ -209,7 +209,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun enterCommonToolsActivity() {
-
+        startActivity(Intent(this, CommonToolsActivity::class.java))
     }
 
     private fun enterSettingActivity() {

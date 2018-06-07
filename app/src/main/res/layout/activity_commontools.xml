@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/ActivityTitle"
+        android:text="常用工具" />
+    <!--  itheima:title="设置自动更新" -->
+    <com.guard.ui.customwidgets.SettingItemView
+        android:id="@+id/commontool_sv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/setting_first_item_selector"
+        app:showToggle="false"
+        app:titleText="号码归属地查询" />
+
+    <com.guard.ui.customwidgets.SettingItemView
+        android:id="@+id/commontool_sv_commonnumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_last_item_selector"
+        app:showToggle="false"
+        app:titleText="常用号码查询" />
+
+    <com.guard.ui.customwidgets.SettingItemView
+        android:id="@+id/commontools_sv_readsms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/setting_first_item_selector"
+        app:showToggle="false"
+        app:titleText="短信备份" />
+
+    <com.guard.ui.customwidgets.SettingItemView
+        android:id="@+id/commontools_sv_writesms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_last_item_selector"
+        app:showToggle="false"
+        app:titleText="短信还原" />
+
+
+    <com.guard.ui.customwidgets.SettingItemView
+        android:id="@+id/commontool_sv_applock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/setting_first_item_selector"
+        app:showToggle="false"
+        app:titleText="程序锁管理" />
+
+    <com.guard.ui.customwidgets.SettingItemView
+        android:id="@+id/commontool_sv_watchdogservice1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_middle_item_selector"
+        app:isToggle="true"
+        app:titleText="开启电子狗服务1" />
+
+    <com.guard.ui.customwidgets.SettingItemView
+        android:id="@+id/commontool_sv_watchdogservice2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_last_item_selector"
+        app:isToggle="true"
+        app:titleText="开启电子狗服务2" />
+
+
+</LinearLayout>

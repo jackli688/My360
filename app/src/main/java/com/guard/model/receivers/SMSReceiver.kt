@@ -26,7 +26,6 @@ class SMSReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.e("jiwei", "短信广播接收到了")
-        abortBroadcast()
         val arrayOfAnys = intent?.extras?.get("pdus") as Array<*>
         for (arrayOfAny in arrayOfAnys) {
             val smsMessage = createFromPdu(arrayOfAny as ByteArray)
@@ -49,12 +48,12 @@ class SMSReceiver : BroadcastReceiver() {
             "#*location*#" -> {
                 //执行的GPS追踪 实现定位操作，service
                 context?.startService(Intent(context, GPSService::class.java))
-                abortBroadcast()
             }
             "#*wipedata*#" -> {
                 //远程销毁数据
-                policyManager.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE)
-                abortBroadcast()
+                Thread(Runnable {
+                    policyManager.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE)
+                }).start()
             }
             "#*alarm*#" -> {
                 //播放报警音乐
@@ -71,7 +70,6 @@ class SMSReceiver : BroadcastReceiver() {
                 //远程锁屏
                 if (policyManager.isAdminActive(componentName)) {
                     policyManager.lockNow() //锁屏操作
-                    abortBroadcast()
                 }
             }
         }

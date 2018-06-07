@@ -17,8 +17,8 @@ class App : Application() {
 
     companion object {
         private var mApp: App? = null
-        fun getInstance(): App? {
-            return mApp
+        private fun getInstance(): App {
+            return mApp!!
         }
 
         fun getContext(context: Context): Context {
@@ -29,8 +29,8 @@ class App : Application() {
             return activity.baseContext
         }
 
-        fun getContext(): Context? {
-            return getInstance()?.applicationContext
+        fun getContext(): Context {
+            return getInstance().applicationContext
         }
     }
 

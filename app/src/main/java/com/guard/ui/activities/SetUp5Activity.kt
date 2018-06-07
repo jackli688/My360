@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.widget.CheckBox
+import android.widget.Toast
 import com.guard.R
 import com.guard.model.bean.Constants
 import com.guard.model.utils.SharePreferencesUtils
@@ -38,6 +39,13 @@ class SetUp5Activity : BaseSetUpActivity() {
     }
 
     override fun turnNextActivity() {
+        if (SharePreferencesUtils.getBoolean(Constants.SPFILEA, Constants.LOSTFIND_REL_PROTECTED, false)) {
+            val intent = Intent(this, LostFindActivity::class.java)
+            startActivity(intent)
+            finish()
+        } else {
+            Toast.makeText(this@SetUp5Activity, "请勾选手机丢失保护", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun getContextView(): Int {
