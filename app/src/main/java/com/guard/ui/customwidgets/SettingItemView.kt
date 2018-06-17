@@ -40,8 +40,8 @@ class SettingItemView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int
         showToggle = typedArray?.getBoolean(R.styleable.SettingItemView_showToggle, true) ?: true
         typedArray?.recycle()
         mRootView = LayoutInflater.from(context)?.inflate(R.layout.item_setting, null, false)
-        mTitleview = mRootView?.findViewById(R.id.settingview_tv_title)
-        mToggleview = mRootView?.findViewById(R.id.settingview_iv_toggle)
+        mTitleview = mRootView?.findViewById(R.id.settingview_tv_title) as TextView
+        mToggleview = mRootView?.findViewById(R.id.settingview_iv_toggle) as ImageView
         this.addView(mRootView)
         setTitle(titleName)
         setToggle(isToggle)

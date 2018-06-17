@@ -19,8 +19,8 @@ class SetUp4Activity : BaseSetUpActivity() {
     lateinit var mDeviceComponentName: ComponentName
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mRelAdmin = findViewById(R.id.setup4_rel_admin)
-        mIcon = findViewById(R.id.setup4_iv_icon)
+        mRelAdmin = findViewById(R.id.setup4_rel_admin) as RelativeLayout
+        mIcon = findViewById(R.id.setup4_iv_icon) as ImageView
         mDevicePolicyManager = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
         mDeviceComponentName = ComponentName(this, AdminReceiver::class.java)
 

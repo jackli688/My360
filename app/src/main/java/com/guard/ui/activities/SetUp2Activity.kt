@@ -31,8 +31,8 @@ class SetUp2Activity : BaseSetUpActivity() {
         } else {
             true
         }
-        val mRelSim = findViewById<RelativeLayout>(R.id.setup2_rel_sim)
-        lockIcon = findViewById(R.id.setup2_iv_lockicon)
+        val mRelSim = findViewById(R.id.setup2_rel_sim) as RelativeLayout
+        lockIcon = findViewById(R.id.setup2_iv_lockicon) as ImageView
         var sp_sim = SharePreferencesUtils.getString(Constants.SPFILEA, Constants.SIMSERIALNUMBER, null)
         if (TextUtils.isEmpty(sp_sim)) {
             lockIcon?.setImageResource(R.drawable.unlock)

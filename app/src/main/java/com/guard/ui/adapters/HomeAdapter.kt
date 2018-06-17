@@ -39,9 +39,9 @@ class HomeAdapter() : BaseAdapter() {
         if (convertView == null) {
             holder = HomeViewHolder()
             rootView = LayoutInflater.from(mContext).inflate(mLayout!!, parent, false)
-            holder.icon = rootView.findViewById(R.id.home_item_icon)
-            holder.title = rootView.findViewById(R.id.home_item_title)
-            holder.desc = rootView.findViewById(R.id.home_item_desc)
+            holder.icon = rootView.findViewById(R.id.home_item_icon) as ImageView
+            holder.title = rootView.findViewById(R.id.home_item_title) as TextView
+            holder.desc = rootView.findViewById(R.id.home_item_desc) as TextView
             rootView.tag = holder
         } else {
             rootView = convertView

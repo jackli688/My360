@@ -24,8 +24,8 @@ class AddressDao private constructor() {
 
     @Synchronized
     fun query(phone: String): String? {
-//        val file = File("/data/data/${App.getContext().packageName}/databases", "address.db")
-        val file = File(App.getContext().filesDir, "address.db")
+        val file = File("/data/data/${App.getContext().packageName}/databases", "address.db")
+//        val file = File(App.getContext().filesDir, "address.db")
         return if (!file.exists()) {
             null
         } else {

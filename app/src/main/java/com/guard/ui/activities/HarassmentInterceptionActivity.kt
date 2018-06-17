@@ -10,15 +10,22 @@ import android.view.View
 import android.widget.AbsListView
 import android.widget.Toast
 import com.guard.R
-import com.guard.R.id.action_image
-import com.guard.R.id.blacknumber_lv_blacknumbers
 import com.guard.model.bean.BlackNumberInfo
 import com.guard.model.db.BlackNumberDao
 import com.guard.ui.adapters.BlackNumberAdapter
+import com.guard.ui.adapters.BlackNumberAdapter.Observer
 import kotlinx.android.synthetic.main.activity_black_number.*
 import java.lang.ref.WeakReference
 
-class HarassmentInterceptionActivity : AppCompatActivity() {
+class HarassmentInterceptionActivity : AppCompatActivity(), Observer {
+    override fun dateChanged() {
+        if (mData == null || mData!!.isEmpty()) {
+            blacknumber_iv_empty?.visibility = View.VISIBLE
+        } else {
+            blacknumber_iv_empty?.visibility = View.GONE
+        }
+    }
+
     companion object {
         val TAG: String = HarassmentInterceptionActivity::class.java.simpleName
 
@@ -83,7 +90,11 @@ class HarassmentInterceptionActivity : AppCompatActivity() {
                         val number = data?.getStringExtra(AddBlackNumberActivity.BLACKNUMBER)
                         val mode = data?.getIntExtra(AddBlackNumberActivity.INTERCEPTIONMODE, -1)
                         if (mode != -1) {
+                            if (mData == null) {
+                                mData = ArrayList()
+                            }
                             mData?.add(0, BlackNumberInfo(number!!, mode!!))
+                            blacknumber_iv_empty.visibility = View.GONE
                             mBlackNumberAdapter?.notifyDataSetChanged()
                         }
                     }
@@ -116,13 +127,10 @@ class HarassmentInterceptionActivity : AppCompatActivity() {
 
         }
 
-        when {
-            mData?.isEmpty()!! -> {
-                blacknumber_iv_empty.visibility = View.VISIBLE
-            }
-            else -> {
-                blacknumber_iv_empty.visibility = View.GONE
-            }
+        if (mData == null || mData!!.isEmpty()) {
+            blacknumber_iv_empty.visibility = View.VISIBLE
+        } else {
+            blacknumber_iv_empty.visibility = View.GONE
         }
 
         super.onActivityResult(requestCode, resultCode, data)
@@ -157,7 +165,7 @@ class HarassmentInterceptionActivity : AppCompatActivity() {
                     activity?.mData!!.addAll(result)
                 }
                 if (activity?.mBlackNumberAdapter == null) {
-                    activity?.mBlackNumberAdapter = BlackNumberAdapter(activity!!, activity?.mData)
+                    activity?.mBlackNumberAdapter = BlackNumberAdapter(activity!!, activity?.mData, activity!!)
                     activity?.blacknumber_lv_blacknumbers!!.adapter = activity?.mBlackNumberAdapter
                 }
                 activity?.mBlackNumberAdapter?.notifyDataSetChanged()

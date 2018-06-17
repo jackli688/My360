@@ -21,6 +21,7 @@ import com.guard.model.services.AddressService
 import com.guard.model.services.BlackNumberService
 import com.guard.model.utils.ServiceUtils
 import com.guard.model.utils.SharePreferencesUtils
+import com.guard.ui.customwidgets.AddressDialog
 import com.guard.ui.customwidgets.SettingItemView
 
 @Suppress("DEPRECATION")
@@ -40,15 +41,15 @@ class SettingActivity : AppCompatActivity(), View.OnClickListener {
     var attributionStyle: SettingItemView? = null
     var attribution: SettingItemView? = null
     val REQUESTCALLCODE = 1
-    val REQUESTSYSTEM_ALERT_WINDOWCODE = 2
+    val REQUEST_PHONESTATECODE = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
-        autoUpdate = findViewById(R.id.autoUpdate)
-        harassmentInterception = findViewById(R.id.harassmentInterception)
-        attributionStyle = findViewById(R.id.attributionStyle)
-        attribution = findViewById(R.id.attribution)
+        autoUpdate = findViewById(R.id.autoUpdate) as SettingItemView
+        harassmentInterception = findViewById(R.id.harassmentInterception) as SettingItemView
+        attributionStyle = findViewById(R.id.attributionStyle) as SettingItemView
+        attribution = findViewById(R.id.attribution) as SettingItemView
 
         autoUpdate?.setOnClickListener(this)
         harassmentInterception?.setOnClickListener(this)
@@ -116,30 +117,35 @@ class SettingActivity : AppCompatActivity(), View.OnClickListener {
                         startActivityForResult(intent, 100)
                     } else {
                         //6.0系统
-                        val intent = Intent(this@SettingActivity, AddressService::class.java)
-                        if (ServiceUtils.checkServiceIsRunning(this, AddressService::class.java.name)) {
-                            stopService(intent)
-                            attribution?.setToggle(false)
+                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE)) {
+
+                            } else {
+                                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), REQUEST_PHONESTATECODE)
+                            }
                         } else {
-                            startService(intent)
-                            attribution?.setToggle(true)
+                            switchAddressService()
                         }
                     }
                 } else {
                     //6.0系统
-                    val intent = Intent(this@SettingActivity, AddressService::class.java)
-                    if (ServiceUtils.checkServiceIsRunning(this, AddressService::class.java.name)) {
-                        stopService(intent)
-                        attribution?.setToggle(false)
-                    } else {
-                        startService(intent)
-                        attribution?.setToggle(true)
-                    }
+                    switchAddressService()
                 }
 
             }
 
             R.id.attributionStyle -> showPickColorDialog()
+        }
+    }
+
+    private fun switchAddressService() {
+        val intent = Intent(this@SettingActivity, AddressService::class.java)
+        if (ServiceUtils.checkServiceIsRunning(this, AddressService::class.java.name)) {
+            stopService(intent)
+            attribution?.setToggle(false)
+        } else {
+            startService(intent)
+            attribution?.setToggle(true)
         }
     }
 
@@ -155,7 +161,8 @@ class SettingActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showPickColorDialog() {
-
+        val addressDialog = AddressDialog(this)
+        addressDialog.show()
     }
 
     private fun updateItemView(settingItemView: SettingItemView?, key: String) {
@@ -184,8 +191,13 @@ class SettingActivity : AppCompatActivity(), View.OnClickListener {
                 } else {
                     Toast.makeText(this@SettingActivity, "打电话权限没有授权...", Toast.LENGTH_SHORT).show()
                 }
-                return
-
+            }
+            REQUEST_PHONESTATECODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    switchAddressService()
+                } else {
+                    Toast.makeText(this@SettingActivity, "权限没有授权...", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -194,17 +206,12 @@ class SettingActivity : AppCompatActivity(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 100) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                val permission = SYSTEM_ALERT_WINDOW
-                val result = ContextCompat.checkSelfPermission(this, permission)
-                if (result == PackageManager.PERMISSION_GRANTED) {
+                if (Settings.canDrawOverlays(this)) {
                     //6.0系统
-                    val intent = Intent(this@SettingActivity, AddressService::class.java)
-                    if (ServiceUtils.checkServiceIsRunning(this, AddressService::class.java.name)) {
-                        stopService(intent)
-                        attribution?.setToggle(false)
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(arrayOf(Manifest.permission.READ_PHONE_STATE), REQUEST_PHONESTATECODE)
                     } else {
-                        startService(intent)
-                        attribution?.setToggle(true)
+                        switchAddressService()
                     }
                 } else {
                     Toast.makeText(this, "悬浮窗的权限没有给叔,来电提醒功能将不能正常使用", Toast.LENGTH_SHORT).show()
@@ -214,6 +221,7 @@ class SettingActivity : AppCompatActivity(), View.OnClickListener {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
+
 
 }
 

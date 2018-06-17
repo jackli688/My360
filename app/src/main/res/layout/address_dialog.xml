@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:padding="8dp"
+        android:text="选择归属地样式"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+    <!-- divider : 设置listview分割线样式
+    	   如果设置的是颜色的话，需要设置分割线的高度
+    	 dividerHeight:设置分割线高度
+    -->
+    <ListView
+        android:id="@+id/addressdialog_lv_bgs"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0.5dp" />
+
+</LinearLayout>

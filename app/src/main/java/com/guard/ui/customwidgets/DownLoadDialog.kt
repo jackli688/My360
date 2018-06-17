@@ -24,8 +24,8 @@ class DownLoadDialog(context: Context?) : Dialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.diloag_download)
-        mDownloadmsg = findViewById(R.id.dialog_update_download_msg)
-        mDownloadpb = findViewById(R.id.dialog_update_pb)
+        mDownloadmsg = findViewById(R.id.dialog_update_download_msg) as TextView
+        mDownloadpb = findViewById(R.id.dialog_update_pb) as ProgressBar
         mDownloadpb?.max = 100
         mDownloadpb?.progress = 50
 

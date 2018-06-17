@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
@@ -86,9 +85,9 @@ class HomeActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         var dialog: AlertDialog? = null
         val view = LayoutInflater.from(this).inflate(R.layout.home_enterpassword_dialog, null, false)
-        val inputEdit = view.findViewById<EditText>(R.id.homeenterpassword_et_psw)
-        val okey = view.findViewById<Button>(R.id.homeenterpassword_btn_ok)
-        val cancle = view.findViewById<Button>(R.id.homeenterpassword_btn_cancel)
+        val inputEdit = view.findViewById(R.id.homeenterpassword_et_psw) as EditText
+        val okey = view.findViewById(R.id.homeenterpassword_btn_ok) as Button
+        val cancle = view.findViewById(R.id.homeenterpassword_btn_cancel) as Button
         okey.setOnClickListener {
             val inputCode = inputEdit.text.toString()
             when {
@@ -117,10 +116,10 @@ class HomeActivity : AppCompatActivity() {
     private fun showSetpassWordDialog() {
         val builder = AlertDialog.Builder(this)
         val view = LayoutInflater.from(this).inflate(R.layout.home_setpassword_dialog, null, false)
-        val password = view.findViewById<EditText>(R.id.homesetpassword_et_psw)
-        val passwordConfirm = view.findViewById<EditText>(R.id.homesetpassword_et_confirm)
-        val okey = view.findViewById<Button>(R.id.homesetpassword_btn_ok)
-        val cancle = view.findViewById<Button>(R.id.homesetpassword_btn_cancel)
+        val password = view.findViewById(R.id.homesetpassword_et_psw) as EditText
+        val passwordConfirm = view.findViewById(R.id.homesetpassword_et_confirm) as EditText
+        val okey = view.findViewById(R.id.homesetpassword_btn_ok) as Button
+        val cancle = view.findViewById(R.id.homesetpassword_btn_cancel) as Button
         builder.setView(view)
         val dialog = builder.create()
 //        dialog.window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
@@ -190,7 +189,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun enterSoftManagerActivity() {
-
+        startActivity(Intent(this, SoftManagerActivity::class.java))
     }
 
     private fun enterHarassmentInterceptionActivity() {
@@ -225,9 +224,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        mHomeLogo = findViewById(R.id.home_lv_logo)
-        mHomeSetting = findViewById(R.id.home_setting)
-        mHomeGridView = findViewById(R.id.home_gridView)
+        mHomeLogo = findViewById(R.id.home_lv_logo) as ImageView
+        mHomeSetting = findViewById(R.id.home_setting) as ImageButton
+        mHomeGridView = findViewById(R.id.home_gridView) as GridView
     }
 
 
@@ -249,17 +248,16 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1) {
-            if (!Settings.canDrawOverlays(this)) {
-                // You don't have permission
-                requestPermission()
-            } else {
+//            if (!Settings.canDrawOverlays(this)) {
+//                // You don't have permission
+//                requestPermission()
+//            } else {
                 // Do as per your logic
                 showSetpassWordDialog()
-            }
+//            }
 
         }
     }

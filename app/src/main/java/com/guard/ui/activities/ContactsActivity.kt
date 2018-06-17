@@ -38,8 +38,8 @@ class ContactsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts)
-        mContactsView = findViewById(R.id.contacts_rv_contacts)
-        progressBar = findViewById(R.id.contacts_pb_loading)
+        mContactsView = findViewById(R.id.contacts_rv_contacts) as RecyclerView
+        progressBar = findViewById(R.id.contacts_pb_loading) as ProgressBar
         mContactsView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         contactsAdapter = ContactsAdapter(this)
         mContactsView.adapter = contactsAdapter
@@ -93,9 +93,9 @@ class ContactsActivity : AppCompatActivity() {
         }
 
         inner class ContactsHolder(v: View) : RecyclerView.ViewHolder(v) {
-            var icon: ImageView = v.findViewById(R.id.item_iv_icon)
-            var name: TextView = v.findViewById(R.id.item_tv_name)
-            var number: TextView = v.findViewById(R.id.item_tv_number)
+            var icon = v.findViewById(R.id.item_iv_icon) as ImageView
+            var name = v.findViewById(R.id.item_tv_name) as TextView
+            var number = v.findViewById(R.id.item_tv_number) as TextView
         }
     }
 

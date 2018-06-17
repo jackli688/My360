@@ -31,7 +31,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3"
         tools:text="手机防盗"
-        tools:textColor="@android:color/black" />
+        tools:textColor="@android:color/black"
+        android:layout_marginLeft="@dimen/unit_5dp" />
 
     <TextView
         android:id="@+id/home_item_desc"
@@ -42,6 +43,7 @@
         app:layout_constraintLeft_toRightOf="@+id/home_item_icon"
         app:layout_constraintTop_toBottomOf="@+id/home_item_title"
         tools:text="远程定位手机"
-        tools:textColor="@color/home_item_desc_text_color" />
+        tools:textColor="@color/home_item_desc_text_color"
+        android:layout_marginLeft="@dimen/unit_5dp" />
 
 </android.support.constraint.ConstraintLayout>

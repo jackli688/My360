@@ -37,11 +37,11 @@ class AddressToast(var context: Context) : Toast(context), View.OnTouchListener 
         params.width = WindowManager.LayoutParams.WRAP_CONTENT
         params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
         params.format = PixelFormat.TRANSLUCENT
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            params.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY
-        } else {
-            params.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            params.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY
+//        } else {
+        params.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE
+//        }
     }
 
 
@@ -57,7 +57,7 @@ class AddressToast(var context: Context) : Toast(context), View.OnTouchListener 
             if (Settings.canDrawOverlays(context)) {
                 //6.0系统
                 mRootView = LayoutInflater.from(context).inflate(R.layout.address_toast, null, false)
-                val mAddress = mRootView?.findViewById<TextView>(R.id.address_toast_tv_address)
+                val mAddress = mRootView?.findViewById(R.id.address_toast_tv_address) as TextView
                 mAddress?.text = result
                 val drawable = SharePreferencesUtils.getInt(Constants.SPFILEA, Constants.ADDRESSDIALOGBG, R.drawable.normal)
                 mAddress?.setBackgroundResource(drawable)

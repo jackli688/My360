@@ -15,7 +15,7 @@ class SetUp3Activity : BaseSetUpActivity() {
     var safeNumber: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mInputSafeNumber = findViewById(R.id.setup3_et_safenumber)
+        mInputSafeNumber = findViewById(R.id.setup3_et_safenumber) as EditText
         safeNumber = SharePreferencesUtils.getString(Constants.SPFILEA, Constants.SAFENUMBER, null)
         mInputSafeNumber?.setText(safeNumber)
     }

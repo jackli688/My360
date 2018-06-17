@@ -1,13 +1,11 @@
 package com.guard.ui.activities
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.ContextCompat.startActivity
 import android.view.MotionEvent
 import android.widget.Toast
 import com.guard.R
@@ -81,7 +79,7 @@ class SetUp1Activity : BaseSetUpActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             1 -> {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this@SetUp1Activity, "access sms permission granted", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this@SetUp1Activity, "access sms permission not granted", Toast.LENGTH_SHORT).show()
@@ -96,7 +94,7 @@ class SetUp1Activity : BaseSetUpActivity() {
 //                }
             }
             3 -> {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this@SetUp1Activity, "access fine location permission granted", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this@SetUp1Activity, "access fine location permission not granted", Toast.LENGTH_SHORT).show()
@@ -104,7 +102,7 @@ class SetUp1Activity : BaseSetUpActivity() {
                 }
             }
             4 -> {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this@SetUp1Activity, "receive_sms permission granted", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this@SetUp1Activity, "receive_sms permission not granted", Toast.LENGTH_SHORT).show()

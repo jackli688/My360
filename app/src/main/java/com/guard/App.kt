@@ -3,6 +3,7 @@ package com.guard
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import com.facebook.stetho.Stetho
 
 /**
  * @author: jackli
@@ -37,5 +38,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         mApp = this
+        Stetho.initializeWithDefaults(this)
     }
 }

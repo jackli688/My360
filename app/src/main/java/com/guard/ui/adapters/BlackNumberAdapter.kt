@@ -23,7 +23,13 @@ import com.guard.ui.activities.HarassmentInterceptionActivity
  * @date: 2018/6/2
  * @time: 12:16
  */
-class BlackNumberAdapter(var context: HarassmentInterceptionActivity, var mData: ArrayList<BlackNumberInfo>?) : BaseAdapter() {
+class BlackNumberAdapter(var context: HarassmentInterceptionActivity, var mData: ArrayList<BlackNumberInfo>?, obs: Observer) : BaseAdapter() {
+
+    var observer: Observer? = null
+
+    init {
+        observer = obs
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val bean = mData?.get(position)
@@ -32,9 +38,9 @@ class BlackNumberAdapter(var context: HarassmentInterceptionActivity, var mData:
         if (convertView == null) {
             tempConvertView = LayoutInflater.from(context).inflate(R.layout.item_blacknumber_listview, null, false)
             bViewHolder = BViewHolder()
-            bViewHolder.blackNumber = tempConvertView.findViewById(R.id.item_tv_blacknumber)
-            bViewHolder.interceptionMode = tempConvertView.findViewById(R.id.item_tv_mode)
-            bViewHolder.deleteImage = tempConvertView.findViewById(R.id.item_iv_delete)
+            bViewHolder.blackNumber = tempConvertView.findViewById(R.id.item_tv_blacknumber) as TextView
+            bViewHolder.interceptionMode = tempConvertView.findViewById(R.id.item_tv_mode) as TextView
+            bViewHolder.deleteImage = tempConvertView.findViewById(R.id.item_iv_delete) as ImageView
             tempConvertView.tag = bViewHolder
         } else {
             tempConvertView = convertView
@@ -62,6 +68,7 @@ class BlackNumberAdapter(var context: HarassmentInterceptionActivity, var mData:
                 if (delete) {
                     mData?.remove(bean)
                     notifyDataSetChanged()
+                    observer?.dateChanged()
                     dialog?.dismiss()
                 } else {
                     Toast.makeText(context, "系统繁忙，请稍后再试，亲", Toast.LENGTH_SHORT).show()
@@ -90,5 +97,10 @@ class BlackNumberAdapter(var context: HarassmentInterceptionActivity, var mData:
         var interceptionMode: TextView? = null
         var deleteImage: ImageView? = null
 
+    }
+
+
+    interface Observer {
+        fun dateChanged()
     }
 }

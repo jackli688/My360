@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.guard.ui.customview.MyGridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/unit_200dp"
+    android:layout_height="@dimen/unit_200dp">
+
+    <TextView
+        android:id="@+id/showText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_light"
+        android:padding="@dimen/unit_5dp"
+        android:text="ShowTime"
+        android:textSize="@dimen/unit_20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_light"
+        android:padding="@dimen/unit_5dp"
+        android:text="11"
+        android:textSize="@dimen/unit_20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_light"
+        android:padding="@dimen/unit_5dp"
+        android:text="2222"
+        android:textSize="@dimen/unit_20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_light"
+        android:padding="@dimen/unit_5dp"
+        android:text="333"
+        android:textSize="@dimen/unit_20sp" />
+
+    <!--<com.guard.ui.customview.MoveView-->
+    <!--android:id="@+id/soft_move"-->
+    <!--android:layout_width="50dp"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:background="@android:color/black"-->
+    <!--android:clickable="true"-->
+    <!--android:focusable="true" />-->
+</com.guard.ui.customview.MyGridView>

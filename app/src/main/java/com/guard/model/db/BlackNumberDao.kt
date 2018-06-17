@@ -18,7 +18,7 @@ import com.guard.model.bean.BlackNumberInfo
 class BlackNumberDao private constructor(context: Context) {
     var blackNumberOpenHelper: BlackNumberOpenHelper = BlackNumberOpenHelper(context)
 
-    private constructor() : this(App.getContext()!!)
+    private constructor() : this(App.getContext())
 
     companion object {
         val instance: BlackNumberDao by lazy { BlackNumberDao() }

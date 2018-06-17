@@ -15,7 +15,9 @@ import com.guard.ui.activities.HarassmentInterceptionActivity
  * @date: 2018/5/30
  * @time: 23:24
  */
-class BlackNumberOpenHelper(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) : SQLiteOpenHelper(context, name, factory, version) {
+class BlackNumberOpenHelper : SQLiteOpenHelper {
+    constructor(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) : super(context, name, factory, version)
+
     companion object {
         val BLACKNUMBER_DBNAME = "blacknumber.db"
         val BLACKNUMBER_VERSION = 1
@@ -31,7 +33,7 @@ class BlackNumberOpenHelper(context: Context?, name: String?, factory: SQLiteDat
 
     }
 
-    constructor(context: Context?) : this(context, BLACKNUMBER_DBNAME, null, BLACKNUMBER_VERSION) {}
+    internal constructor(context: Context?) : this(context, BLACKNUMBER_DBNAME, null, BLACKNUMBER_VERSION)
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(BLACKNUMBER_SQL)

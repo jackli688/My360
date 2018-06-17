@@ -22,7 +22,7 @@ class SetUp5Activity : BaseSetUpActivity() {
                 requestPermissions(arrayOf(android.Manifest.permission.BROADCAST_SMS), 1)
             }
         }
-        mProtected = findViewById(R.id.setup5_cb_protected)
+        mProtected = findViewById(R.id.setup5_cb_protected) as CheckBox
         mProtected.isChecked = SharePreferencesUtils.getBoolean(Constants.SPFILEA, Constants.LOSTFIND_REL_PROTECTED, false)
         mProtected.setOnClickListener {
             val result = SharePreferencesUtils.getBoolean(Constants.SPFILEA, Constants.LOSTFIND_REL_PROTECTED, false)

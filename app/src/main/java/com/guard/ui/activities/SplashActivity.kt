@@ -11,10 +11,7 @@ import android.net.Uri
 import android.os.*
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.ContextCompat.startActivity
-import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
@@ -51,10 +48,12 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        Log.d(Tag, "filesDir:$filesDir")
         requestPermission()
-        val mRootView: ConstraintLayout = findViewById(R.id.splash_rootView)
+        setContentView(R.layout.activity_splash)
+        val mRootView = findViewById(R.id.splash_rootView) as ConstraintLayout
         //View :展示动画
+        mRootView.alpha = 0.3f
         executeAnimator(mRootView)
     }
 
@@ -65,10 +64,11 @@ class SplashActivity : AppCompatActivity() {
 
             } else {
                 //进行授权
-                ActivityCompat.requestPermissions(this, Array(1, { permission }), 1)
+                ActivityCompat.requestPermissions(this, Array(1) { permission }, 1)
             }
         } else {
             copyDb("address.db")
+            copyDb("commonnum.db")
         }
 
     }
@@ -79,38 +79,38 @@ class SplashActivity : AppCompatActivity() {
         val copyTask: AsyncTask<Void, Void, Void> = @SuppressLint("StaticFieldLeak")
         object : AsyncTask<Void, Void, Void>() {
             override fun doInBackground(vararg params: Void?): Void? {
-//                val outFileName = "/data/data/$packageName/databases"
-                val outFileName = filesDir
-                val file = File(outFileName, name)
+                val outFilePath = "/data/data/$packageName/databases"
+//                val outFileName = filesDir
+                val databaseFile = File(outFilePath)
                 var myInutStream: InputStream? = null
                 var bops: BufferedOutputStream? = null
-                if (!file.exists()) {
-                    file.createNewFile()
-                    try {
-                        myInutStream = assets.open(name)
+                if (!databaseFile.exists()) {
+                    databaseFile.mkdir()
+                }
+                val file = File(outFilePath, name)
+                try {
+                    myInutStream = assets.open(name)
 //                        val filesDir = this.filesDir
 //                        Log.e("111", "filesDir:$filesDir")
-                        bops = BufferedOutputStream(FileOutputStream(file))
-                        val bytes = ByteArray(4096)
-                        var len = -1
-                        while (true) {
-                            len = myInutStream.read(bytes, 0, bytes.size)
-                            if (len == -1) {
-                                break
-                            } else {
-                                bops.write(bytes, 0, len)
-                            }
+                    bops = BufferedOutputStream(FileOutputStream(file))
+                    val bytes = ByteArray(4096)
+                    var len = -1
+                    while (true) {
+                        len = myInutStream.read(bytes, 0, bytes.size)
+                        if (len == -1) {
+                            break
+                        } else {
+                            bops.write(bytes, 0, len)
                         }
-                        bops.flush()
-                        Log.e(Tag, name + "copy succeed")
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                        file.delete()
-                    } finally {
-                        myInutStream?.close()
-                        bops?.close()
                     }
-
+                    bops.flush()
+                    Log.e(Tag, name + "copy succeed")
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    file.delete()
+                } finally {
+                    myInutStream?.close()
+                    bops?.close()
                 }
                 return null
             }
@@ -190,15 +190,15 @@ class SplashActivity : AppCompatActivity() {
         val file = File(savePath)
         val intent = Intent()
         intent.action = android.content.Intent.ACTION_VIEW
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-            intent.setDataAndType(FileProvider.getUriForFile(baseContext, baseContext.packageName +
-                    ".com.guard.model.providers.genericfileprovider", file),
-                    "application/vnd.android.package-archive")
-        } else {
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive")
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+//            intent.setDataAndType(FileProvider.getUriForFile(baseContext, baseContext.packageName +
+//                    ".com.guard.model.providers.genericfileprovider", file),
+//                    "application/vnd.android.package-archive")
+//        } else {
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive")
+//        }
         startActivityForResult(intent, REQUESTCODE)
     }
 
@@ -248,7 +248,7 @@ class SplashActivity : AppCompatActivity() {
         val alphaAnimator = ObjectAnimator.ofFloat(
                 mRootView,
                 "alpha",
-                0.0f,
+                0.3f,
                 1.0f
         )
         alphaAnimator.duration = 3000
