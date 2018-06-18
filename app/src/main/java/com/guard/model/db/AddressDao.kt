@@ -1,8 +1,6 @@
 package com.guard.model.db
 
-import android.annotation.SuppressLint
 import android.database.sqlite.SQLiteDatabase
-import android.util.Log.i
 import com.guard.App
 import java.io.File
 

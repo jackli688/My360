@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/setting_last_item_selector"
         app:showToggle="false"
+        android:contentDescription=""
         app:titleText="常用号码查询" />
 
     <com.guard.ui.customwidgets.SettingItemView

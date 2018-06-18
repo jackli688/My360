@@ -13,11 +13,13 @@ class CommonToolsActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_commontools)
         commontool_sv_address.setOnClickListener(this)
+        commontool_sv_commonnumber.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.commontool_sv_address -> startActivity(Intent(this, AddressActivity::class.java))
+            R.id.commontool_sv_commonnumber -> startActivity(Intent(this, CommonAddressActivity::class.java))
         }
     }
 }
