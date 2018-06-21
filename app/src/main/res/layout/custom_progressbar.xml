@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--遇到一个问题，自定义组合控件的时候，基层RelativeLayout的时候，加载的布局根节点是ConstraintLayout的时候，这个布局会错位
+      解决办法是：
+      1.继承的父类不变的情况下：在加载的布局外层套用一层RelativeLayout，那么使用ConstraintLayout的意义就不再了
+       //2.改变继承的父类，即有继承RelativeLayout改成继承ConstraintLayout(wrong)
+      最外层的RelativeLayout是为了解决在自定义组合控件的时候，加载到-->
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/memory"
+            android:layout_width="@dimen/unit_40dp"
+            android:layout_height="wrap_content"
+            android:text="内存"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/unit_16sp"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/appmanager_pb_progressbar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/appmanager_pb_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:max="100"
+            android:progress="30"
+            android:progressDrawable="@drawable/customprogressbar_bg"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@id/memory"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:id="@+id/appmanager_tv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:text="XX.XXMB已用"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@+id/appmanager_pb_progressbar" />
+
+        <TextView
+            android:id="@+id/appmanager_tv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="XX.XXMB可用"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+
+</RelativeLayout>
