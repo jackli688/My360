@@ -74,7 +74,7 @@ class AppsUtils {
         var packageName: String? = null
         var icon: Drawable? = null
         var isSD: Boolean? = true
-        var isSystem: Boolean? = false
+        var isSystem: Boolean = false
         var size: Long = 0
 
         class Builder {
@@ -82,7 +82,7 @@ class AppsUtils {
             var packageName: String? = null
             var icon: Drawable? = null
             var isSD: Boolean? = true
-            var isSystem: Boolean? = false
+            var isSystem: Boolean = false
             var size: Long = 0
 
             fun addName(name: String): Builder {

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/unit_50dp">
+
+    <ImageView
+        android:id="@+id/processManager_iv_appIcon"
+        android:layout_width="@dimen/unit_40dp"
+        android:layout_height="@dimen/unit_40dp"
+        android:layout_marginLeft="@dimen/unit_10dp"
+        android:layout_marginStart="@dimen/unit_10dp"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/processManager_guideLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/processManager_tv_appLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/unit_2dp"
+        android:layout_marginLeft="@dimen/unit_15dp"
+        android:layout_marginStart="@dimen/unit_15dp"
+        android:maxLines="1"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@id/processManager_guideLine"
+        app:layout_constraintLeft_toRightOf="@+id/processManager_iv_appIcon"
+        tools:text="MY360" />
+
+
+    <TextView
+        android:id="@+id/processManager_tv_storeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/unit_15dp"
+        android:layout_marginStart="@dimen/unit_15dp"
+        android:layout_marginTop="@dimen/unit_2dp"
+        app:layout_constraintLeft_toRightOf="@id/processManager_iv_appIcon"
+        app:layout_constraintTop_toBottomOf="@id/processManager_guideLine"
+        tools:text="手机内存" />
+
+
+    <TextView
+        android:id="@+id/softManager_tv_appSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/unit_5dp"
+        android:layout_marginLeft="@dimen/unit_10dp"
+        android:layout_marginRight="@dimen/unit_5dp"
+        android:layout_marginStart="@dimen/unit_10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/processManager_tv_storeTitle"
+        app:layout_constraintLeft_toRightOf="@+id/processManager_tv_storeTitle"
+        tools:text="29.8MB" />
+
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/processManager_cb_selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/unit_10dp"
+        android:layout_marginRight="@dimen/unit_10dp"
+        android:clickable="false"
+        android:focusable="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
+

@@ -94,7 +94,7 @@ class SoftManagerAdapter(var context: Context, result: AppsUtils.ApplicationList
                     holder?.headerTitle?.text = "系统程序(${systemApps.size}个)"
                 }
                 userApps.size + 1 < position && position < userApps.size + systemApps.size + 2 -> {
-                    bindData(holder, systemApps[position - userApps.size - 1])
+                    bindData(holder, systemApps[position - userApps.size - 2])
                 }
             }
         } else {

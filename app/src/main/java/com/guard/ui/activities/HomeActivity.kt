@@ -185,7 +185,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun enterProcessManagerActivity() {
-
+       startActivity(Intent(this,ProcessManagerActivity::class.java))
     }
 
     private fun enterSoftManagerActivity() {

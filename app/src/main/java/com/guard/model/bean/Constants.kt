@@ -26,4 +26,5 @@ object Constants {
     const val SETUPASKSAFENUMBERREQUESTCODE = 1001
     const val LOSTFIND_REL_PROTECTED = "lostfind_rel_protected"
     const val ADDRESSDIALOGBG = "addressdialogbg"
+    const val SHOWSYSTEMPROCESS = "showsystemprocess"
 }

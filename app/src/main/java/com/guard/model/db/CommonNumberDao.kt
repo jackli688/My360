@@ -21,15 +21,6 @@ class CommonNumberDao private constructor() {
     private var openDatabase: SQLiteDatabase? = null
     private val Tag = this.javaClass.simpleName
 
-    init {
-        Log.e(Tag, "init's block run")
-        val filePath = "data/data/${App.getContext().packageName}/databases/commonnum.db"
-        val datbaseFile = File(filePath)
-        if (datbaseFile.exists()) {
-            openDatabase = SQLiteDatabase.openDatabase(datbaseFile.absolutePath, null, SQLiteDatabase.OPEN_READONLY)
-        }
-    }
-
     companion object {
         val instances by lazy {
             CommonNumberDao()
@@ -39,7 +30,11 @@ class CommonNumberDao private constructor() {
 
     @SuppressLint("Recycle")
     fun queryGroup(): List<CommonNumberGroupInfo>? {
-        if (openDatabase != null) {
+        Log.e(Tag, "init's block run")
+        val filePath = "data/data/${App.getContext().packageName}/databases/commonnum.db"
+        val datbaseFile = File(filePath)
+        if (datbaseFile.exists()) {
+            openDatabase = SQLiteDatabase.openDatabase(datbaseFile.absolutePath, null, SQLiteDatabase.OPEN_READONLY)
             val cursour = openDatabase!!.query("classlist", arrayOf("name", "idx"), null, null, null, null, null)
             return if (cursour != null) {
                 val list = ArrayList<CommonNumberGroupInfo>()
@@ -62,7 +57,10 @@ class CommonNumberDao private constructor() {
 
 
     fun queryChild(idx: String): List<CommonNumberChildInfo>? {
-        if (openDatabase != null) {
+        Log.e(Tag, "init's block run")
+        val filePath = "data/data/${App.getContext().packageName}/databases/commonnum.db"
+        val datbaseFile = File(filePath)
+        if (datbaseFile.exists()) {
             val cursor = openDatabase!!.query("table$idx", arrayOf("number", "name"), null, null, null, null, null)
             return if (cursor != null) {
                 val list = ArrayList<CommonNumberChildInfo>()

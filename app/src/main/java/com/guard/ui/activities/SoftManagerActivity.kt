@@ -7,18 +7,18 @@ import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.TextUtils
 import android.text.format.Formatter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.PopupWindow
 import android.widget.Toast
+import com.guard.App
 import com.guard.R
 import com.guard.model.utils.AppsUtils
 import com.guard.model.utils.StorageUtil
 import com.guard.model.utils.UIUtils
-import com.guard.persenter.SoftManagerPersenter
+import com.guard.persenter.SoftManagerPresenterImp
 import com.guard.ui.adapters.SoftManagerAdapter
 import com.guard.ui.listeners.ItemClickListener
 import com.guard.ui.listeners.SimpleClickListener
@@ -31,11 +31,12 @@ import kotlinx.android.synthetic.main.activity_softmanager.*
  */
 
 class SoftManagerActivity : AppCompatActivity() {
+
     private val Tag = SoftManagerActivity::class.java.simpleName
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private var softManagerPersenter: SoftManagerPersenter? = null
+    private var softManagerPersenter: SoftManagerPresenterImp? = null
     private var popupWindow: PopupWindow? = null
 
     companion object {
@@ -52,18 +53,19 @@ class SoftManagerActivity : AppCompatActivity() {
 
     private fun initView() {
         viewManager = LinearLayoutManager(this)
-        appmanager_rv_apps.apply {
+        processManager_rv_apps.apply {
             setHasFixedSize(true) //RecyclerView的一项优化
             layoutManager = viewManager
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                     val linearLayoutManager = viewManager as LinearLayoutManager
                     val firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition()
-                    hideItemPopupWindow()
                     softManagerPersenter?.judgeTitleWhatShow(firstVisiblePosition)
+                    hideItemPopuWindow()
+                    softManagerPersenter?.notifyScrollState(true)
                 }
             })
-            appmanager_rv_apps.addOnItemTouchListener(ItemClickListener(appmanager_rv_apps, object : SimpleClickListener() {
+            addOnItemTouchListener(ItemClickListener(processManager_rv_apps, object : SimpleClickListener() {
                 override fun onItemClick(v: View, position: Int) {
                     softManagerPersenter?.judgeShowPopupWindow(v, position)
                 }
@@ -73,101 +75,44 @@ class SoftManagerActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        softManagerPersenter = SoftManagerPersenter(this)
+        softManagerPersenter = SoftManagerPresenterImp(this)
         softManagerPersenter?.loadData()
     }
 
     fun notifyDataSetChanged(result: AppsUtils.ApplicationList) {
         val softManagerAdapter = SoftManagerAdapter(this, result)
-        appmanager_rv_apps.apply { adapter = softManagerAdapter }
+        processManager_rv_apps.apply { adapter = softManagerAdapter }
     }
-
-    fun showItemPopupWindow(v: View, app: AppsUtils.AppInfo) {
-        hideItemPopupWindow()
-        val showView = LayoutInflater.from(this).inflate(R.layout.softmanager_popupwindow, null, false)
-        popupWindow = PopupWindow(showView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
-        popupWindow?.showAsDropDown(v, UIUtils.di2px(60.0f), -v.height)
-        showView.findViewById(R.id.ll_uninstall).apply { setOnClickListener { unInstallApk(app) } }
-        showView.findViewById(R.id.ll_open).apply { setOnClickListener { startApk(app.packageName) } }
-        showView.findViewById(R.id.ll_share).apply { setOnClickListener { shareApk(app) } }
-        showView.findViewById(R.id.ll_info).apply { setOnClickListener { showApkInfo(app) } }
-    }
-
-    private fun showApkInfo(app: AppsUtils.AppInfo) {
-        Uri.fromParts("package:", app.packageName, null)
-        //Uri.parse的源码应该好好看看
-        val uri = Uri.parse("package:${app.packageName}")
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, uri)
-        startActivity(intent)
-    }
-
-    private fun shareApk(app: AppsUtils.AppInfo) {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_TEXT, "发现了一个很好用的软件:${app.name},在应用宝中可以找到！！！！")
-        startActivity(intent)
-    }
-
-    private fun startApk(packageName: String?) {
-        val intent = packageManager.getLaunchIntentForPackage(packageName)
-        if (intent != null) {
-            startActivity(intent)
-        } else {
-            Toast.makeText(this, "native程序,这里无法启动", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun unInstallApk(app: AppsUtils.AppInfo) {
-        if (packageName == app.packageName) {
-            Toast.makeText(this, "文明社会,杜绝自杀....", Toast.LENGTH_SHORT).show()
-        } else {
-            if (!TextUtils.isEmpty(app.packageName)) {
-                if (!app.isSystem!!) {
-                    val uri = Uri.parse("package:${app.packageName}")
-                    val intent = Intent(Intent.ACTION_DELETE, uri)
-                    startActivityForResult(intent, UNISTALLAPK)
-                } else {
-                    Toast.makeText(this, "系统应用，请授予Root权限", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    fun hideItemPopupWindow() {
-        popupWindow?.dismiss()
-        popupWindow = null
-    }
-
 
     fun showMemoryMsg(memoryInfo: StorageUtil.MemoryInfo) {
-        appmanager_cp_memory.setText("内存")
+        appManager_cp_memory.setText("内存")
         val usedMemory = memoryInfo.memoryCount - memoryInfo.memoryAvail
         val usedMemorytext = Formatter.formatFileSize(this, usedMemory)
-        appmanager_cp_memory.setUsedMemory(usedMemorytext)
+        appManager_cp_memory.setUsedMemory(usedMemorytext)
         val availableMemorytext = Formatter.formatFileSize(this, memoryInfo.memoryAvail)
-        appmanager_cp_memory.setAvaliableMemory(availableMemorytext)
-        appmanager_cp_memory.setProgress(memoryInfo.getUsedRate())
+        appManager_cp_memory.setAvaliableMemory(availableMemorytext)
+        appManager_cp_memory.setProgress(memoryInfo.usedMemoryRate)
     }
 
 
     fun showSDStorageMsg(sdCardInfo: StorageUtil.ExternalStorgeInfo) {
-        appmanager_cp_sd.setText("SD")
+        processManager_cp_sd.setText("SD")
         val usedSD = sdCardInfo.totalSize - sdCardInfo.availSize
         val usedSDtext = Formatter.formatFileSize(this, usedSD)
-        appmanager_cp_sd.setUsedMemory(usedSDtext)
+        processManager_cp_sd.setUsedMemory(usedSDtext)
         val availableSDtext = Formatter.formatFileSize(this, sdCardInfo.availSize)
-        appmanager_cp_sd.setAvaliableMemory(availableSDtext)
-        appmanager_cp_sd.setProgress(sdCardInfo.getUsedRate())
+        processManager_cp_sd.setAvaliableMemory(availableSDtext)
+        processManager_cp_sd.setProgress(sdCardInfo.getUsedRate())
     }
 
     override fun onDestroy() {
+        softManagerPersenter?.onDetach()
         softManagerPersenter = null
-        hideItemPopupWindow()
         super.onDestroy()
     }
 
     fun showAppTitle(title: String) {
-        appmanager_tv_userAppstitle.text = title
+        processManager_tv_appTitle.text = title
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -177,4 +122,62 @@ class SoftManagerActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    fun showItemPopupWindow(v: View, appInfo: AppsUtils.AppInfo) {
+        if (popupWindow != null && popupWindow!!.isShowing) {
+            popupWindow!!.dismiss()
+        }
+        val viewRoot = LayoutInflater.from(this).inflate(R.layout.softmanager_popupwindow, null, false)
+        viewRoot.apply {
+            findViewById(R.id.ll_uninstall).setOnClickListener {
+                when {
+                    packageName == appInfo.packageName -> {
+                        toast("文明社会，拒绝自杀!!!")
+                    }
+
+                    appInfo.isSystem -> {
+                        toast("系统应用，没有足够的权限进行卸载，，，，，，，，")
+                    }
+
+                    else -> {
+                        val intent = Intent(Intent.ACTION_DELETE)
+                        intent.addCategory(Intent.CATEGORY_DEFAULT)
+                        val uri = Uri.fromParts("package", appInfo.packageName, null)
+                        intent.data = uri
+                        startActivityForResult(intent, UNISTALLAPK)
+                    }
+                }
+
+            }
+            findViewById(R.id.ll_open).setOnClickListener {
+                val intent = packageManager.getLaunchIntentForPackage(appInfo.packageName)
+                startActivity(intent)
+            }
+            findViewById(R.id.ll_share).setOnClickListener {
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.addCategory(Intent.CATEGORY_DEFAULT)
+                intent.type = "text/plain"
+                intent.putExtra(Intent.EXTRA_TEXT, "发现一个好用的软件，${appInfo.name},想在尽请到应用宝")
+                startActivity(intent)
+            }
+            findViewById(R.id.ll_info).setOnClickListener {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.addCategory(Intent.CATEGORY_DEFAULT)
+                val uri = Uri.fromParts("package", appInfo.packageName, null)
+                intent.data = uri
+                startActivity(intent)
+            }
+        }
+        popupWindow = PopupWindow(viewRoot, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        popupWindow?.showAsDropDown(v, UIUtils.di2px(60.0f), -v.height)
+    }
+
+    fun hideItemPopuWindow() {
+        if (popupWindow != null && popupWindow!!.isShowing) {
+            popupWindow!!.dismiss()
+            popupWindow = null
+        }
+    }
+
 }
+
+fun toast(str: String) = Toast.makeText(App.getContext(), str, Toast.LENGTH_SHORT).show()

@@ -1,0 +1,5 @@
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minHeight="@dimen/unit_60dp"
+    android:minWidth="@dimen/unit_200dp"
+    android:updatePeriodMillis="0"
+    android:initialLayout="@layout/process_widget"/>

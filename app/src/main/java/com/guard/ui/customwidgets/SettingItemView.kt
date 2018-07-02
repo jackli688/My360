@@ -1,8 +1,6 @@
 package com.guard.ui.customwidgets
 
 import android.content.Context
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -78,6 +76,12 @@ class SettingItemView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int
         else
             mToggleview?.setImageResource(R.drawable.off)
     }
+
+    fun toggle() {
+        isToggle = !isToggle
+        setToggle(isToggle)
+    }
+
 
     fun getShowToggle(): Boolean? {
         return showToggle

@@ -3,6 +3,7 @@
     package="com.guard">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -58,6 +59,7 @@
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
         <activity android:name=".ui.activities.CommonAddressActivity" />
         <activity android:name=".ui.activities.AppManagerActivity" />
+        <activity android:name=".ui.activities.ProcessManagerActivity" />
 
 
         <provider
@@ -100,11 +102,22 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".model.receivers.WidgetReceiver">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/example_appwidget_info" />
+        </receiver>
+
         <service
             android:name=".model.services.GPSService"
             android:permission="android.permission.ACCESS_FINE_LOCATION" />
         <service android:name=".model.services.BlackNumberService" />
         <service android:name=".model.services.AddressService" />
+        <service android:name=".model.services.LockScreenService" />
+        <service android:name=".model.services.WidgetService" />
     </application>
 
 </manifest>

@@ -50,4 +50,5 @@ dependencies {
 //    运行App, 打开Chrome输入chrome://inspect/#devices 脸书查看Android本地数据库的译中方式
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation 'org.greenrobot:greendao:3.2.2' // add library
+    implementation 'com.jaredrummler:android-processes:1.1.1'
 }

@@ -10,12 +10,12 @@
         android:text="软件管理" />
 
     <com.guard.ui.customview.CustomProgressbar
-        android:id="@+id/appmanager_cp_memory"
+        android:id="@+id/appManager_cp_memory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <com.guard.ui.customview.CustomProgressbar
-        android:id="@+id/appmanager_cp_sd"
+        android:id="@+id/processManager_cp_sd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -24,14 +24,14 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/appmanager_rv_apps"
+            android:id="@+id/processManager_rv_apps"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical" />
 
         <TextView
-            android:id="@+id/appmanager_tv_userAppstitle"
+            android:id="@+id/processManager_tv_appTitle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/unit_50dp"
             android:background="@android:color/darker_gray"

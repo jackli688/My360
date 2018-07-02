@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/processManager_title"
+        style="@style/ActivityTitle"
+        android:text="进程管理"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/processManager_iv_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/unit_10dp"
+        android:layout_marginTop="@dimen/unit_10dp"
+        android:clickable="true"
+        android:contentDescription="clear process icon"
+        android:focusable="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/selector_processmanager_clear"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.guard.ui.customview.CustomProgressbar
+        android:id="@+id/processManager_cp_processes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/processManager_title" />
+
+    <com.guard.ui.customview.CustomProgressbar
+        android:id="@+id/processManager_cp_memory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/processManager_rv_processList"
+        app:layout_constraintTop_toBottomOf="@+id/processManager_cp_processes" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/processManager_rv_processList"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/unit_0dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/processManager_bt_all"
+        app:layout_constraintTop_toBottomOf="@+id/processManager_cp_memory"
+        app:layout_constraintVertical_weight="1" />
+
+    <TextView
+        android:id="@+id/processManager_tv_processTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/unit_50dp"
+        android:background="@android:color/darker_gray"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@+id/processManager_cp_memory"
+        tools:text="用户程序(7)" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/processManager_gl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/unit_0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.17" />
+
+    <Button
+        android:id="@+id/processManager_bt_all"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/home_setpassword_dialog_cancel"
+        android:text="全选"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/processManager_bt_none"
+        app:layout_constraintTop_toBottomOf="@+id/processManager_rv_processList" />
+
+    <Button
+        android:id="@+id/processManager_bt_none"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/home_setpassword_dialog_cancel"
+        android:text="反选"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@+id/processManager_bt_all"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/processManager_sd_drawer" />
+
+
+    <!--这个控件已经过时了，看看有什么可以代替的-->
+    <SlidingDrawer
+        android:id="@+id/processManager_sd_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/unit_0dp"
+        android:content="@+id/processManager_ll_content"
+        android:handle="@+id/processManager_ll_handle"
+        app:layout_constraintBottom_toTopOf="@+id/processManager_bt_none"
+        app:layout_constraintTop_toBottomOf="@+id/processManager_gl"
+        app:layout_constraintVertical_weight="1">
+
+        <LinearLayout
+            android:id="@+id/processManager_ll_handle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/drawer_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/processManager_iv_drawer1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/drawer_arrow_up" />
+
+            <ImageView
+                android:id="@+id/processManager_iv_drawer2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/drawer_arrow_up" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/processManager_ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="进程管理设置"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <com.guard.ui.customwidgets.SettingItemView
+                android:id="@+id/processManager_sv_showSystem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/setting_first_item_selector"
+                android:clickable="true"
+                android:focusable="true"
+                app:isToggle="false"
+                app:titleText="显示系统进程" />
+
+            <com.guard.ui.customwidgets.SettingItemView
+                android:id="@+id/processManager_sv_lockScreen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/setting_last_item_selector"
+                android:clickable="true"
+                android:focusable="true"
+                app:isToggle="false"
+                app:showToggle="true"
+                app:titleText="锁屏清理进程" />
+        </LinearLayout>
+    </SlidingDrawer>
+
+
+</android.support.constraint.ConstraintLayout>

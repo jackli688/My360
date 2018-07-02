@@ -9,6 +9,7 @@ import android.os.Environment.*
 import android.os.StatFs
 import android.text.format.Formatter
 import android.util.Log
+import org.xutils.x.Ext.init
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
@@ -160,25 +161,26 @@ class StorageUtil {
     class MemoryInfo(count: Long, avail: Long) {
         var memoryCount: Long = 0L
         var memoryAvail: Long = 0L
+        var availMemoryRate: Int = 0
+        var usedMemoryRate: Int = 0
 
         init {
             memoryCount = count
             memoryAvail = avail
+            notifyRate()
         }
 
-        fun getAvailRate(): Int {
-            return if (0L == memoryAvail) {
+
+        fun notifyRate() {
+            availMemoryRate = if (0L == memoryAvail) {
                 0
             } else {
                 Math.round((memoryAvail.toFloat() * 100 / memoryCount))
             }
+            usedMemoryRate = 100 - availMemoryRate
+
         }
 
-        fun getUsedRate(): Int {
-            val availRate = getAvailRate()
-            Log.i("getUsedRate", "-------:$availRate")
-            return 100 - getAvailRate()
-        }
     }
 
     class ExternalStorgeInfo(totalSize: Long, availSize: Long) {
